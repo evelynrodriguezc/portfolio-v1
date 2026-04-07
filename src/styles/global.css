@@ -170,6 +170,9 @@ header p {
 }
 
 
+#contact p {
+  margin-bottom: 6px;
+}
 
 
 
@@ -177,5 +180,13 @@ header p {
 @media (max-width: 768px) {
   .projects {
     grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .card a {
+    padding: 8px 14px;
+    font-size: 0.8rem;
   }
 }
