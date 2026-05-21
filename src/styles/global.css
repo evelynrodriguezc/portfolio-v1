@@ -587,16 +587,36 @@ section {
 /* ---- Mobile ---- */
 @media (max-width: 680px) {
   body {
-    padding: 0 18px;
+    padding: 0 20px;
   }
 
   main {
-    padding: 36px 0 64px;
+    padding: 28px 0 56px;
   }
 
+  section {
+    margin-bottom: 64px;
+  }
+
+  /* Hero */
   #hero {
-    padding-top: 16px;
-    margin-bottom: 44px;
+    padding-top: 20px;
+    margin-bottom: 48px;
+  }
+
+  .eyebrow {
+    margin-bottom: 16px;
+  }
+
+  h1 {
+    font-size: 1.7rem;
+    line-height: 1.2;
+    letter-spacing: -0.4px;
+    margin-bottom: 18px;
+  }
+
+  #hero h1 {
+    margin-bottom: 18px;
   }
 
   .br-desktop {
@@ -604,8 +624,19 @@ section {
   }
 
   .hero-sub {
-    font-size: 0.95rem;
-    margin-bottom: 32px;
+    font-size: 0.9375rem;
+    line-height: 1.65;
+    margin-bottom: 28px;
+    max-width: 100%;
+  }
+
+  .hero-actions {
+    gap: 8px;
+  }
+
+  /* Project cards */
+  .projects-featured {
+    margin-bottom: 12px;
   }
 
   .project-card--featured {
@@ -620,27 +651,47 @@ section {
   }
 
   .project-card--featured .project-body {
-    padding: 18px 20px 20px;
+    padding: 16px 18px 18px;
+    gap: 8px;
   }
 
   .projects-grid {
     grid-template-columns: 1fr;
-    gap: 12px;
+    gap: 10px;
   }
 
   .project-img-wrap {
-    aspect-ratio: 16 / 10;
-  }
-
-  .work-grid {
-    grid-template-columns: 1fr;
-    gap: 16px;
-  }
-
-  .work-img-wrap {
     aspect-ratio: 16 / 9;
   }
 
+  .project-body {
+    padding: 14px 16px 16px;
+    gap: 8px;
+  }
+
+  /* Selected Work */
+  .work-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .work-img-wrap {
+    aspect-ratio: 16 / 8;
+    overflow: hidden;
+  }
+
+  .work-img-wrap a {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  .work-card-body {
+    padding: 14px 16px 16px;
+    gap: 8px;
+  }
+
+  /* Misc */
   .featured-footer {
     flex-direction: column;
     align-items: flex-start;
@@ -651,11 +702,11 @@ section {
   }
 
   h2 {
-    font-size: 1.4rem;
+    font-size: 1.35rem;
   }
 
   .contact-heading {
-    font-size: 1.4rem;
+    font-size: 1.35rem;
   }
 
   #contact {
@@ -666,17 +717,19 @@ section {
   .contact-links-row {
     flex-direction: column;
     align-items: flex-start;
-    gap: 16px;
+    gap: 14px;
   }
 }
 
 @media (max-width: 480px) {
   .hero-actions {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: stretch;
+    gap: 8px;
   }
 
-  .btn {
-    width: fit-content;
+  .hero-actions .btn {
+    justify-content: center;
+    text-align: center;
   }
 }
