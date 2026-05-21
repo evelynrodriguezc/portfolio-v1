@@ -2,15 +2,14 @@
 import MainLayout from "../layouts/MainLayout.astro";
 ---
 
-<MainLayout title="Evelyn Rodriguez — Software Engineer">
+<MainLayout title="Evelyn R. — Developer">
 
   <!-- Hero -->
   <section id="hero">
-    <p class="eyebrow">Evelyn Rodriguez — Software Engineer</p>
-    <h1>Building software that is<br class="br-desktop" /> clear, useful, and well-made.</h1>
+    <p class="eyebrow">Evelyn Rodríguez — Developer</p>
+    <h1>Building frontend systems<br class="br-desktop" />and AI-assisted workflows.</h1>
     <p class="hero-sub">
-      Systems engineer focused on frontend development, AI tooling,
-      and shipping things that work.
+      Systems engineer focused on frontend development, workflow automation, and practical AI-assisted tools.
     </p>
     <div class="hero-actions">
       <a href="#projects" class="btn btn-primary">View Work</a>
@@ -25,27 +24,27 @@ import MainLayout from "../layouts/MainLayout.astro";
       <p class="projects-subtitle">Frontend experiments and product-focused projects.</p>
     </div>
 
-    <div class="projects-grid">
-
-      <article class="project-card">
+    <div class="projects-featured">
+      <article class="project-card project-card--featured">
         <div class="project-img-wrap">
           <a href="https://nova.evelynr.dev" target="_blank" rel="noopener">
             <img src="/nova_ss.png" alt="Nova app screenshot" />
           </a>
         </div>
         <div class="project-body">
-          <div class="project-meta">
-            <h3>Nova</h3>
-            <div class="project-tags">
-              <span>React</span>
-              <span>Node.js</span>
-              <span>PostgreSQL</span>
-            </div>
-          </div>
+          <h3>Nova</h3>
           <p class="project-desc">AI-powered project management SaaS concept. A frontend prototype exploring how AI insights could surface team bottlenecks and automate workload distribution.</p>
+          <div class="project-tags">
+            <span>React</span>
+            <span>Node.js</span>
+            <span>PostgreSQL</span>
+          </div>
           <a href="https://nova.evelynr.dev" target="_blank" rel="noopener" class="project-link">View Project →</a>
         </div>
       </article>
+    </div>
+
+    <div class="projects-grid">
 
       <article class="project-card">
         <div class="project-img-wrap">
@@ -54,103 +53,114 @@ import MainLayout from "../layouts/MainLayout.astro";
           </a>
         </div>
         <div class="project-body">
-          <div class="project-meta">
-            <h3>SmartHome</h3>
-            <div class="project-tags">
-              <span>Bootstrap</span>
-              <span>JavaScript</span>
-              <span>HTML</span>
-            </div>
-          </div>
+          <h3>SmartHome</h3>
           <p class="project-desc">A home automation platform for controlling lights, blinds, appliances, security cameras, and energy usage from a single interface.</p>
+          <div class="project-tags">
+            <span>Bootstrap</span>
+            <span>JavaScript</span>
+            <span>HTML</span>
+          </div>
           <a href="https://smart-home-solutions.evelynr.dev" target="_blank" rel="noopener" class="project-link">View Project →</a>
         </div>
       </article>
 
-      <article class="project-card">
+      <article class="project-card project-card--extra">
         <div class="project-img-wrap">
           <a href="https://equestria.evelynr.dev" target="_blank" rel="noopener">
             <img src="/horses-ss.png" alt="Equestrian website screenshot" />
           </a>
         </div>
         <div class="project-body">
-          <div class="project-meta">
-            <h3>Equestrian Website</h3>
-            <div class="project-tags">
-              <span>Bootstrap</span>
-              <span>HTML</span>
-              <span>CSS</span>
-            </div>
-          </div>
+          <h3>Equestrian Website</h3>
           <p class="project-desc">An informational website for an equestrian business, designed for clarity and easy navigation across services, horses, and contact info.</p>
+          <div class="project-tags">
+            <span>Bootstrap</span>
+            <span>HTML</span>
+            <span>CSS</span>
+          </div>
           <a href="https://equestria.evelynr.dev" target="_blank" rel="noopener" class="project-link">View Project →</a>
         </div>
       </article>
 
-      <article class="project-card">
+      <article class="project-card project-card--extra">
         <div class="project-img-wrap">
           <a href="https://www.figma.com/design/DLYUOd8T1ibHGOMPutyryY/NotesAppDesign?node-id=2103-685&t=Uu1i5inqXQfHwnkq-1" target="_blank" rel="noopener">
             <img src="/figma-ss.png" alt="Notes app screenshot" />
           </a>
         </div>
         <div class="project-body">
-          <div class="project-meta">
-            <h3>Notes App</h3>
-            <div class="project-tags">
-              <span>Figma</span>
-              <span>UI Design</span>
-            </div>
-          </div>
+          <h3>Notes App</h3>
           <p class="project-desc">An iOS notes app designed in Figma — includes list and detail views, image support, quote formatting, and interactive bottom sheets for sharing and deleting.</p>
+          <div class="project-tags">
+            <span>Figma</span>
+            <span>UI Design</span>
+          </div>
           <a href="https://www.figma.com/design/DLYUOd8T1ibHGOMPutyryY/NotesAppDesign?node-id=2103-685&t=Uu1i5inqXQfHwnkq-1" target="_blank" rel="noopener" class="project-link">View Project →</a>
         </div>
       </article>
 
     </div>
+
+    <button class="projects-show-more" id="projectsToggle">Show more projects</button>
   </section>
+
+  <script>
+    const toggle = document.getElementById('projectsToggle');
+    const extras = document.querySelectorAll('.project-card--extra');
+    let expanded = false;
+    toggle?.addEventListener('click', () => {
+      expanded = !expanded;
+      extras.forEach(el => el.classList.toggle('project-card--visible', expanded));
+      toggle.textContent = expanded ? 'Show less' : 'Show more projects';
+    });
+  </script>
 
   <!-- Selected Work -->
   <section id="work">
-    <p class="section-label">Selected Work</p>
+    <div class="work-header">
+      <p class="section-label">Selected Work</p>
+      <p class="work-subtitle">Production websites and frontend work developed through client and agency collaborations.</p>
+    </div>
 
-    <div class="work-list">
+    <div class="work-grid">
 
-      <article class="work-item">
-        <div class="work-info">
-          <h3>Delmain</h3>
-          <span class="work-tag">WordPress · Web Development</span>
+      <article class="work-card">
+        <div class="work-img-wrap">
+          <a href="https://jacksonfamilydentalonline.com/" target="_blank" rel="noopener">
+            <img src="/delmain1.png" alt="Jackson Family Dental website screenshot" />
+          </a>
         </div>
-        <p class="work-desc">
-          Built and maintained ~70 WordPress websites for small businesses.
-          Implemented automation for form handling and content workflows to reduce
-          manual overhead and improve team efficiency.
-        </p>
-        <a href="javascript:void(0);" class="work-link">View Details →</a>
+        <div class="work-card-body">
+          <p class="work-agency">Delmain</p>
+          <h3>Jackson Family Dental</h3>
+          <p class="work-card-desc">Frontend implementation and responsive improvements for a production business website.</p>
+          <div class="work-card-tags">
+            <span>WordPress</span>
+            <span>PHP</span>
+            <span>CSS</span>
+            <span>JavaScript</span>
+          </div>
+          <a href="https://jacksonfamilydentalonline.com/" target="_blank" rel="noopener" class="work-visit-link">Visit Website ↗</a>
+        </div>
       </article>
 
-      <article class="work-item">
-        <div class="work-info">
-          <h3>Outlier AI</h3>
-          <span class="work-tag">AI · Evaluation</span>
+      <article class="work-card">
+        <div class="work-img-wrap">
+          <a href="https://simplyheating.ca" target="_blank" rel="noopener">
+            <img src="/pekan1.png" alt="Simply Heating website screenshot" />
+          </a>
         </div>
-        <p class="work-desc">
-          Evaluated AI-generated outputs across coding and multimodal tasks.
-          Identified patterns and improved response quality through structured
-          analysis and feedback workflows.
-        </p>
-        <a href="javascript:void(0);" class="work-link">View Details →</a>
-      </article>
-
-      <article class="work-item">
-        <div class="work-info">
-          <h3>Portfolio Website</h3>
-          <span class="work-tag">Astro · Design</span>
+        <div class="work-card-body">
+          <p class="work-agency">Pekan Designs</p>
+          <h3>Simply Heating</h3>
+          <p class="work-card-desc">Contributed to responsive frontend implementation and ongoing website maintenance.</p>
+          <div class="work-card-tags">
+            <span>HTML</span>
+            <span>CSS</span>
+            <span>JavaScript</span>
+          </div>
+          <a href="https://simplyheating.ca" target="_blank" rel="noopener" class="work-visit-link">Visit Website ↗</a>
         </div>
-        <p class="work-desc">
-          Designed and built this portfolio using Astro, focused on clean layout,
-          responsive design, and fast load times. Deployed on Vercel with a custom domain.
-        </p>
-        <a href="javascript:void(0);" class="work-link">View Details →</a>
       </article>
 
     </div>
@@ -158,11 +168,12 @@ import MainLayout from "../layouts/MainLayout.astro";
 
   <!-- Contact -->
   <section id="contact">
-    <h2>Get in Touch</h2>
-    <p>Open to new opportunities and interesting projects.</p>
-    <div class="contact-links">
-      <a href="mailto:evelynrodriguezc0@gmail.com">evelynrodriguezc0@gmail.com</a>
-      <a href="https://github.com/evelynrodriguezc" target="_blank" rel="noopener">GitHub</a>
+    <p class="section-label">Contact</p>
+    <h2 class="contact-heading">Open to thoughtful projects<br class="br-desktop" /> and collaborations.</h2>
+    <p class="contact-sub">Interested in frontend engineering, product development, and AI-related work. I also contribute to workflow automation and structured evaluation processes.</p>
+    <div class="contact-links-row">
+      <a href="mailto:evelynrodriguezc0@gmail.com" class="contact-link-item">evelynrodriguezc0@gmail.com</a>
+      <a href="https://github.com/evelynrodriguezc" target="_blank" rel="noopener" class="contact-link-item">GitHub ↗</a>
     </div>
   </section>
 
