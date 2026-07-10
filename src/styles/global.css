@@ -260,8 +260,9 @@ section {
   font-weight: 700;
   line-height: 1.2;
   letter-spacing: -0.02em;
-  max-width: 22ch;
+  max-width: 38ch;
   margin-left: auto;
+  text-align: right;
   text-wrap: balance;
 }
 
@@ -269,6 +270,7 @@ section {
 .interstitial--left p {
   margin-left: 0;
   margin-right: auto;
+  text-align: left;
 }
 
 /* ---- Hero ---- */
@@ -795,6 +797,11 @@ section {
     border-radius: 999px;
     padding: 6px 14px;
     font-size: var(--step--2);
+  }
+
+  /* six chips crowd a phone screen; keep the four strongest */
+  .about-facts .fact-extra {
+    display: none;
   }
 }
 
