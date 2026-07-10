@@ -7,16 +7,16 @@
 
 /* ---- Tokens ---- */
 :root {
-  --bg:            #121110;
-  --surface:       #1A1917;
-  --text:          #EDE8E0;
-  --text-muted:    #98918A;
-  --brand:         #6B8AFF;
-  --brand-dark:    #89A2FF;
-  --accent:        #6B8AFF;
-  --border:        #2A2825;
-  --border-light:  #201F1C;
-  --border-strong: #4A443E;
+  --bg:            #121213;
+  --surface:       #1B1B1C;
+  --text:          #E9EAEC;
+  --text-muted:    #8F9096;
+  --brand:         #7A93E5;
+  --brand-dark:    #95A9EA;
+  --accent:        #7A93E5;
+  --border:        #2A2A2C;
+  --border-light:  #1F1F21;
+  --border-strong: #484A50;
 
   /* Fluid type scale */
   --step--3: 0.67rem;
@@ -42,16 +42,16 @@
 
 /* light theme: same variable names, different values — every rule using var() adapts automatically */
 :root[data-theme="light"] {
-  --bg:            #F4F0E8;
-  --surface:       #FBF8F2;
-  --text:          #1E1B17;
-  --text-muted:    #6E6862;
-  --brand:         #3B5BDB;
-  --brand-dark:    #2E48B8;
-  --accent:        #3B5BDB;
-  --border:        #DDD6CA;
-  --border-light:  #E9E3D8;
-  --border-strong: #B9B1A3;
+  --bg:            #F1F1F0;
+  --surface:       #F8F8F8;
+  --text:          #1B1B1D;
+  --text-muted:    #6C6E73;
+  --brand:         #4A62C4;
+  --brand-dark:    #3D53B0;
+  --accent:        #4A62C4;
+  --border:        #DBDBDA;
+  --border-light:  #E7E7E6;
+  --border-strong: #B4B4B3;
 }
 
 /* ---- Base ---- */
