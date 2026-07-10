@@ -4,9 +4,10 @@
       font: 700 120px 'Space Grotesk', system-ui, sans-serif;
       fill: #1E1B17;
     }
-    tspan { fill: #E07850; }
+    tspan { fill: #3B5BDB; }
     @media (prefers-color-scheme: dark) {
       text { fill: #EDE8E0; }
+      tspan { fill: #6B8AFF; }
     }
   </style>
   <text x="64" y="94" text-anchor="middle">e<tspan>.</tspan></text>
