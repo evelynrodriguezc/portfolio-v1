@@ -917,8 +917,8 @@ section {
 
   /* Hero */
   #hero {
-    padding-top: 56px;
-    padding-bottom: 64px;
+    padding-top: 72px;
+    padding-bottom: 56px;
     margin-bottom: 56px;
   }
 
@@ -927,18 +927,23 @@ section {
   }
 
   #hero h1 {
-    margin-bottom: 18px;
+    margin-bottom: 20px;
   }
 
   .hero-sub {
     font-size: 0.9375rem;
     line-height: 1.65;
-    margin-bottom: 28px;
+    margin-bottom: 32px;
     max-width: 100%;
   }
 
   .hero-actions {
     gap: 24px;
+  }
+
+  /* desktop 3rem gap reads as a hole on a narrow screen */
+  .hero-proof {
+    margin-top: 40px;
   }
 
   #contact {
@@ -964,6 +969,7 @@ section {
     align-items: center;
     gap: 6px;
     padding-right: 0;
+    margin-bottom: 40px; /* fixed gap replaces the fluid clamp: steadier rhythm at phone sizes */
   }
 
   .hero-status {
@@ -973,6 +979,7 @@ section {
   #hero h1 {
     max-width: none;
     font-size: 2rem; /* fixed size tuned so the short headline breaks at two lines */
+    line-height: 1.02; /* touch tighter than desktop so two lines read as one block */
   }
 
   /* swap to the short copy on small screens */
@@ -1009,7 +1016,11 @@ section {
   /* centered layout: side rules read wrong, so each stat centers with no border */
   .hero-proof {
     justify-content: center;
-    gap: 24px;
+    gap: 40px;
+  }
+
+  .proof-item {
+    gap: 6px;
   }
 
   .proof-item {
