@@ -941,16 +941,25 @@ section {
     font-size: 0.9375rem;
     line-height: 1.65;
     margin-bottom: 32px;
-    max-width: 100%;
+    max-width: 38ch;
   }
 
   .hero-actions {
     gap: 24px;
   }
 
+  .hero-cta-primary {
+    padding: 14px 30px;
+    font-size: var(--step-0);
+  }
+
   /* desktop 3rem gap reads as a hole on a narrow screen */
   .hero-proof {
     margin-top: 40px;
+  }
+
+  .proof-num {
+    font-size: var(--step-1);
   }
 
   #contact {
