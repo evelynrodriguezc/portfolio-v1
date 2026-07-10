@@ -441,7 +441,7 @@ section {
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--text-muted);
-  max-width: 20ch;
+  white-space: nowrap;
 }
 
 .eyebrow {
@@ -910,8 +910,8 @@ section {
 
   /* Hero */
   #hero {
-    padding-top: 40px;
-    padding-bottom: 40px;
+    padding-top: 56px;
+    padding-bottom: 64px;
     margin-bottom: 56px;
   }
 
@@ -957,6 +957,10 @@ section {
     align-items: center;
     gap: 6px;
     padding-right: 0;
+  }
+
+  .hero-status {
+    display: none;
   }
 
   #hero h1 {
