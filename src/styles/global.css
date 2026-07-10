@@ -704,10 +704,18 @@ section {
     padding-top: 40px;
   }
 
-  /* single column of ruled rows: zero gap so the border lines read as one continuous table */
+  /* on mobile the ruled rows wrap badly, so facts become chips: same pill language as the card tags */
   .about-facts {
-    grid-template-columns: 1fr;
-    gap: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .about-facts li {
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 6px 14px;
+    font-size: var(--step--2);
   }
 }
 
@@ -861,10 +869,16 @@ section {
 }
 
 @media (max-width: 480px) {
+  /* stretch = buttons take full width, easier thumb target and no lonely left-aligned pill */
   .hero-actions {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: stretch;
     gap: 16px;
+  }
+
+  .hero-cta-primary,
+  .hero-cta-secondary {
+    justify-content: center;
   }
 }
 
