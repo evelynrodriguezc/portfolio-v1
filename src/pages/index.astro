@@ -6,181 +6,190 @@ import MainLayout from "../layouts/MainLayout.astro";
 
   <!-- Hero -->
   <section id="hero">
-    <div class="hero-shape hero-shape--1" aria-hidden="true"></div>
-    <div class="hero-shape hero-shape--2" aria-hidden="true"></div>
-    <div class="hero-shape hero-shape--3" aria-hidden="true"></div>
-    <div class="hero-shape hero-shape--4" aria-hidden="true"></div>
-    <p class="eyebrow">Evelyn Rodríguez — Developer</p>
-    <h1>Building frontend systems<br class="br-desktop" /> and AI-assisted workflows.</h1>
-    <p class="hero-sub">
-      Systems engineer focused on frontend development, workflow automation, and practical AI-assisted tools.
-    </p>
-    <div class="hero-actions">
-      <a href="#projects" class="hero-cta-primary">See My Work →</a>
-      <a href="#contact" class="hero-cta-secondary">Let's Talk</a>
+    <div class="hero-top">
+      <span class="hero-name">Evelyn Rodríguez</span>
+      <span class="hero-status">Portfolio 2026</span>
     </div>
-    <p class="hero-tags">frontend · AI workflows · open to projects</p>
+    <h1 class="reveal"><span class="reveal-item">Web developer who keeps real sites <span class="accent-word">running</span> and ships new ones</span></h1>
+    <p class="hero-sub reveal">
+      <span class="reveal-item" style="--reveal-delay: 0.12s">Frontend with HTML, CSS, JavaScript and React. 70+ production WordPress sites maintained and extended, plus automation that replaced manual publishing and QA.</span>
+    </p>
+    <div class="hero-actions reveal">
+      <a href="#projects" class="hero-cta-primary reveal-item" style="--reveal-delay: 0.2s">See my work <span class="arrow arrow-down">↓</span></a>
+      <a href="#contact" class="hero-cta-secondary reveal-item" style="--reveal-delay: 0.26s"><span class="status-dot"></span>Available for work: let's talk</a>
+    </div>
+    <p class="hero-tags reveal"><span class="reveal-item" style="--reveal-delay: 0.32s">frontend · automation · remote</span></p>
   </section>
 
   <!-- Projects -->
   <section id="projects">
-    <div class="projects-header">
-      <p class="section-label">// 01 — projects</p>
-      <p class="projects-subtitle">Frontend experiments and product-focused projects.</p>
+    <div class="section-side">
+      <span class="section-num">01</span>
+      <span class="section-name">projects</span>
     </div>
+    <div class="section-content">
 
-    <div class="projects-featured">
-      <article class="project-card project-card--featured">
-        <div class="project-img-wrap">
-          <a href="https://nova.evelynr.dev" target="_blank" rel="noopener">
-            <img src="/nova_ss.png" alt="Nova app screenshot" />
-          </a>
-        </div>
-        <div class="project-body">
-          <h3>Nova</h3>
-          <p class="project-desc">AI-powered project management SaaS concept. A frontend prototype exploring how AI insights could surface team bottlenecks and automate workload distribution.</p>
-          <div class="project-tags">
-            <span>React</span>
-            <span>Node.js</span>
-            <span>PostgreSQL</span>
+    <div class="showcase">
+
+      <article class="showcase-card showcase-card--wide">
+        <a href="https://nova.evelynr.dev" target="_blank" rel="noopener" class="showcase-media">
+          <img src="/nova_ss.png" alt="Nova project management dashboard" loading="lazy" />
+        </a>
+        <div class="showcase-info">
+          <div class="showcase-text">
+            <h3>Nova</h3>
+            <p>A working preview of an AI-assisted project management app. React interface end to end: project views, team dashboard, AI-insight panels.</p>
           </div>
-          <a href="https://nova.evelynr.dev" target="_blank" rel="noopener" class="project-link">View Project →</a>
-        </div>
-      </article>
-    </div>
-
-    <div class="projects-grid">
-
-      <article class="project-card">
-        <div class="project-img-wrap">
-          <a href="https://smart-home-solutions.evelynr.dev" target="_blank" rel="noopener">
-            <img src="/smart-homes-s-ss.png" alt="SmartHome dashboard screenshot" />
-          </a>
-        </div>
-        <div class="project-body">
-          <h3>SmartHome</h3>
-          <p class="project-desc">A home automation platform for controlling lights, blinds, appliances, security cameras, and energy usage from a single interface.</p>
-          <div class="project-tags">
-            <span>Bootstrap</span>
-            <span>JavaScript</span>
-            <span>HTML</span>
+          <div class="showcase-meta">
+            <div class="showcase-tags">
+              <span>React</span><span>Node.js</span><span>PostgreSQL</span>
+            </div>
+            <a href="https://nova.evelynr.dev" target="_blank" rel="noopener" class="showcase-link">View live ↗</a>
           </div>
-          <a href="https://smart-home-solutions.evelynr.dev" target="_blank" rel="noopener" class="project-link">View Project →</a>
         </div>
       </article>
 
-      <article class="project-card project-card--extra">
-        <div class="project-img-wrap">
-          <a href="https://equestria.evelynr.dev" target="_blank" rel="noopener">
-            <img src="/horses-ss.png" alt="Equestrian website screenshot" />
-          </a>
-        </div>
-        <div class="project-body">
-          <h3>Equestrian Website</h3>
-          <p class="project-desc">An informational website for an equestrian business, designed for clarity and easy navigation across services, horses, and contact info.</p>
-          <div class="project-tags">
-            <span>Bootstrap</span>
-            <span>HTML</span>
-            <span>CSS</span>
+      <article class="showcase-card">
+        <a href="https://smart-home-solutions.evelynr.dev" target="_blank" rel="noopener" class="showcase-media">
+          <img src="/smart-homes-s-ss.png" alt="SmartHome product site" loading="lazy" />
+        </a>
+        <div class="showcase-info">
+          <div class="showcase-text">
+            <h3>SmartHome</h3>
+            <p>Product site for a home automation platform. Responsive multi-page build: Bootstrap, HTML, vanilla JavaScript.</p>
           </div>
-          <a href="https://equestria.evelynr.dev" target="_blank" rel="noopener" class="project-link">View Project →</a>
+          <div class="showcase-meta">
+            <div class="showcase-tags">
+              <span>Bootstrap</span><span>JavaScript</span><span>HTML</span>
+            </div>
+            <a href="https://smart-home-solutions.evelynr.dev" target="_blank" rel="noopener" class="showcase-link">View live ↗</a>
+          </div>
         </div>
       </article>
 
-      <article class="project-card project-card--extra">
-        <div class="project-img-wrap">
-          <a href="https://www.figma.com/design/DLYUOd8T1ibHGOMPutyryY/NotesAppDesign?node-id=2103-685&t=Uu1i5inqXQfHwnkq-1" target="_blank" rel="noopener">
-            <img src="/figma-ss.png" alt="Notes app screenshot" />
-          </a>
-        </div>
-        <div class="project-body">
-          <h3>Notes App</h3>
-          <p class="project-desc">An iOS notes app designed in Figma — includes list and detail views, image support, quote formatting, and interactive bottom sheets for sharing and deleting.</p>
-          <div class="project-tags">
-            <span>Figma</span>
-            <span>UI Design</span>
+      <article class="showcase-card">
+        <a href="https://equestria.evelynr.dev" target="_blank" rel="noopener" class="showcase-media">
+          <img src="/horses-ss.png" alt="Equestrian business website" loading="lazy" />
+        </a>
+        <div class="showcase-info">
+          <div class="showcase-text">
+            <h3>Equestrian Website</h3>
+            <p>Informational site for an equestrian business. Multi-page responsive layout: Bootstrap, HTML, CSS.</p>
           </div>
-          <a href="https://www.figma.com/design/DLYUOd8T1ibHGOMPutyryY/NotesAppDesign?node-id=2103-685&t=Uu1i5inqXQfHwnkq-1" target="_blank" rel="noopener" class="project-link">View Project →</a>
+          <div class="showcase-meta">
+            <div class="showcase-tags">
+              <span>Bootstrap</span><span>HTML</span><span>CSS</span>
+            </div>
+            <a href="https://equestria.evelynr.dev" target="_blank" rel="noopener" class="showcase-link">View live ↗</a>
+          </div>
         </div>
       </article>
 
     </div>
-
-    <button class="projects-show-more" id="projectsToggle">Show more projects</button>
+    </div>
   </section>
-
-  <script>
-    const toggle = document.getElementById('projectsToggle');
-    const extras = document.querySelectorAll('.project-card--extra');
-    let expanded = false;
-    toggle?.addEventListener('click', () => {
-      expanded = !expanded;
-      extras.forEach(el => el.classList.toggle('project-card--visible', expanded));
-      toggle.textContent = expanded ? 'Show less' : 'Show more projects';
-    });
-  </script>
 
   <!-- Selected Work -->
   <section id="work">
-    <div class="work-header">
-      <p class="section-label">// 02 — selected work</p>
-      <p class="work-subtitle">Production websites and frontend work developed through client and agency collaborations.</p>
+    <div class="section-side">
+      <span class="section-num">02</span>
+      <span class="section-name">selected work</span>
     </div>
+    <div class="section-content">
 
-    <div class="work-grid">
+    <div class="showcase">
 
-      <article class="work-card">
-        <div class="work-img-wrap">
-          <a href="https://jacksonfamilydentalonline.com/" target="_blank" rel="noopener">
-            <img src="/delmain1.png" alt="Jackson Family Dental website screenshot" />
-          </a>
-        </div>
-        <div class="work-card-body">
-          <p class="work-agency">Delmain</p>
-          <h3>Jackson Family Dental</h3>
-          <p class="work-card-desc">Frontend implementation and responsive improvements for a production business website.</p>
-          <div class="work-card-tags">
-            <span>WordPress</span>
-            <span>PHP</span>
-            <span>CSS</span>
-            <span>JavaScript</span>
+      <article class="showcase-card">
+        <a href="/work/delmain" class="showcase-media">
+          <img src="/delmain1.png" alt="Jackson Family Dental website" loading="lazy" />
+        </a>
+        <div class="showcase-info">
+          <div class="showcase-text">
+            <p class="showcase-agency">Delmain</p>
+            <h3>Jackson Family Dental</h3>
+            <p>Frontend implementation and responsive improvements for a production business website.</p>
           </div>
-          <a href="https://jacksonfamilydentalonline.com/" target="_blank" rel="noopener" class="work-visit-link">Visit Website ↗</a>
+          <div class="showcase-meta">
+            <div class="showcase-tags">
+              <span>WordPress</span><span>PHP</span><span>CSS</span><span>JavaScript</span>
+            </div>
+            <a href="https://jacksonfamilydentalonline.com/" target="_blank" rel="noopener" class="showcase-link">Live site ↗</a>
+            <a href="/work/delmain" class="showcase-link showcase-link--dim">Case study →</a>
+          </div>
         </div>
       </article>
 
-      <article class="work-card">
-        <div class="work-img-wrap">
-          <a href="https://simplyheating.ca" target="_blank" rel="noopener">
-            <img src="/pekan1.png" alt="Simply Heating website screenshot" />
-          </a>
-        </div>
-        <div class="work-card-body">
-          <p class="work-agency">Pekan Designs</p>
-          <h3>Simply Heating</h3>
-          <p class="work-card-desc">Contributed to responsive frontend implementation and ongoing website maintenance.</p>
-          <div class="work-card-tags">
-            <span>HTML</span>
-            <span>CSS</span>
-            <span>JavaScript</span>
+      <article class="showcase-card">
+        <a href="/work/simply-heating" class="showcase-media">
+          <img src="/pekan1.png" alt="Simply Heating website" loading="lazy" />
+        </a>
+        <div class="showcase-info">
+          <div class="showcase-text">
+            <p class="showcase-agency">Pekan Designs</p>
+            <h3>Simply Heating</h3>
+            <p>Built from scratch from a Figma design: responsive implementation and ongoing maintenance.</p>
           </div>
-          <a href="https://simplyheating.ca" target="_blank" rel="noopener" class="work-visit-link">Visit Website ↗</a>
+          <div class="showcase-meta">
+            <div class="showcase-tags">
+              <span>HTML</span><span>CSS</span><span>JavaScript</span>
+            </div>
+            <a href="https://simplyheating.ca" target="_blank" rel="noopener" class="showcase-link">Live site ↗</a>
+            <a href="/work/simply-heating" class="showcase-link showcase-link--dim">Case study →</a>
+          </div>
         </div>
       </article>
 
+    </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section id="about">
+    <div class="section-side">
+      <span class="section-num">03</span>
+      <span class="section-name">about</span>
+    </div>
+    <div class="section-content">
+    <p class="about-text">
+      I build interfaces in HTML, CSS, JavaScript and React, and keep production sites stable long after launch. I care about the parts most portfolios skip: responsive bugs, publishing workflows, forms that deliver. Systems engineer by degree, remote by choice.
+    </p>
+    <ul class="about-facts">
+      <li>HTML · CSS · JavaScript · React · WordPress</li>
+      <li>70+ production sites maintained &amp; extended (agency, 2024–2025)</li>
+      <li>Workflow automation: publishing, QA, SMTP/forms</li>
+      <li>Systems Engineering degree</li>
+      <li>English C1 / Spanish native</li>
+      <li>Remote, international clients</li>
+    </ul>
     </div>
   </section>
 
   <!-- Contact -->
   <section id="contact">
-    <p class="section-label">// 03 — contact</p>
-    <h2 class="contact-heading">Open to thoughtful projects<br class="br-desktop" /> and collaborations.</h2>
-    <p class="contact-sub">Interested in frontend engineering, product development, and AI-related work. I also contribute to workflow automation and structured evaluation processes.</p>
+    <div class="section-side">
+      <span class="section-num">04</span>
+      <span class="section-name">contact</span>
+    </div>
+    <div class="section-content">
+    <h2 class="contact-heading">Let's work <span class="accent-word">together</span>.</h2>
+    <p class="contact-sub">Available for remote work, contract or full-time: frontend, WordPress, workflow automation.</p>
     <div class="contact-links-row">
-      <a href="mailto:evelynrodriguezc0@gmail.com" class="contact-link-item">Email →</a>
-      <a href="https://github.com/evelynrodriguezc" target="_blank" rel="noopener" class="contact-link-item">GitHub →</a>
-      <a href="https://www.linkedin.com/in/evelynrodriguezc0" target="_blank" rel="noopener" class="contact-link-item">LinkedIn →</a>
+      <a href="#contact" class="contact-link-item" id="email-link">Email <span class="arrow">→</span></a>
+      <a href="https://github.com/evelynrodriguezc" target="_blank" rel="noopener" class="contact-link-item">GitHub <span class="arrow arrow-out">↗</span></a>
+      <a href="https://www.linkedin.com/in/evelynrodriguezc0" target="_blank" rel="noopener" class="contact-link-item">LinkedIn <span class="arrow arrow-out">↗</span></a>
+    </div>
+    <div class="footer-bar">
+      <span>© 2026 Evelyn Rodríguez</span>
+      <a href="#hero" class="back-top">Back to top ↑</a>
+    </div>
     </div>
   </section>
 
 </MainLayout>
+
+<script>
+  const user = ['evelyn', 'rodriguez', 'c0'].join('');
+  const domain = ['gmail', 'com'].join('.');
+  const link = document.getElementById('email-link') as HTMLAnchorElement;
+  link.href = `mailto:${user}@${domain}`;
+</script>
