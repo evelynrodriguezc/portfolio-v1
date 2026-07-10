@@ -237,6 +237,40 @@ section {
   opacity: 0.8;
 }
 
+/* ---- Interstitial ---- */
+/* big gap above, small gap below: proximity groups the statement with the projects it introduces */
+.interstitial {
+  margin-bottom: var(--space-m);
+  border-top: 1px solid var(--border);
+  padding-top: var(--space-l);
+}
+
+#projects {
+  padding-top: 0;
+}
+
+/* mirror of the first statement: left-aligned, bookends the featured grid */
+.interstitial--left p {
+  margin-left: 0;
+  margin-right: auto;
+}
+
+/* interstitial already draws the divider line, so the section below drops its own */
+#work {
+  border-top: none;
+  padding-top: 0;
+}
+
+.interstitial p {
+  font-size: var(--step-3);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  max-width: 22ch;
+  margin-left: auto;
+  text-wrap: balance;
+}
+
 /* ---- Hero ---- */
 #hero {
   position: relative;
@@ -299,8 +333,13 @@ section {
   text-transform: uppercase;
   line-height: 1.05;
   letter-spacing: -0.02em;
-  max-width: 22ch;
-  margin-bottom: var(--space-l);
+  margin-bottom: var(--space-l); /* line breaks are explicit <br>s now, no width cap needed */
+}
+
+/* full/short pairs: desktop and mobile get different copy, CSS swaps which one renders */
+.h1-short,
+.sub-short {
+  display: none;
 }
 
 .accent-word {
@@ -311,16 +350,23 @@ section {
   font-size: var(--step-1);
   line-height: 1.65;
   color: var(--text-muted);
-  margin-bottom: var(--space-l);
+  margin-bottom: var(--space-xl);
   max-width: 52ch;
 }
 
 .hero-actions {
   display: flex;
-  gap: 20px;
-  flex-wrap: wrap;
   align-items: center;
-  margin-bottom: 32px;
+  flex-wrap: wrap;
+  gap: 28px;
+}
+
+.hero-availability {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--step-0);
+  color: var(--text-muted);
 }
 
 .hero-cta-primary {
@@ -334,18 +380,19 @@ section {
   font-size: var(--step-1);
   font-weight: 600;
   letter-spacing: 0.01em;
-  transition: background 0.2s ease;
+  transition: background 0.2s ease, transform 0.2s ease;
 }
 
 .hero-cta-primary:hover {
   background: var(--text);
   color: var(--bg);
+  transform: translateY(-2px); /* slight lift = tactile press-me feel */
 }
 
 .hero-cta-secondary {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: 5px;
   font-size: var(--step-0);
   font-weight: 500;
   color: var(--text);
@@ -364,12 +411,37 @@ section {
   background-size: 100% 1px, 100% 1px;
 }
 
-.hero-tags {
+.hero-proof {
+  display: flex;
+  gap: 40px;
+  flex-wrap: wrap;
+  margin-top: var(--space-xl); /* same air above and below the CTA row: even vertical rhythm */
+}
+
+.proof-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-left: 14px;
+  border-left: 1px solid var(--border); /* thin rule instead of a box keeps it quiet */
+}
+
+.proof-num {
+  font-variant-numeric: tabular-nums; /* fixed-width digits so the count-up doesn't jiggle */
+  font-size: var(--step-2);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  color: var(--text);
+}
+
+.proof-label {
   font-family: 'Courier New', Courier, monospace;
   font-size: var(--step--2);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
   color: var(--text-muted);
-  letter-spacing: 0.04em;
-  max-width: none;
+  max-width: 20ch;
 }
 
 .eyebrow {
@@ -385,7 +457,7 @@ section {
 /* ---- Selected Work ---- */
 #work {
   margin-bottom: 0;
-  padding-bottom: var(--space-2xl);
+  padding-bottom: var(--space-section);
 }
 
 /* ---- Case Study ---- */
@@ -487,12 +559,13 @@ section {
   font-size: var(--step-0);
   font-weight: 600;
   margin-top: 8px;
-  transition: background 0.2s ease;
+  transition: background 0.2s ease, transform 0.2s ease;
 }
 
 .case-cta:hover {
   background: var(--text);
   color: var(--bg);
+  transform: translateY(-2px);
 }
 
 /* ---- Showcase cards ---- */
@@ -539,6 +612,12 @@ section {
   object-fit: cover;
   object-position: top;
   display: block;
+  transition: transform 0.5s cubic-bezier(0.22, 0.65, 0.2, 1);
+}
+
+/* container overflow:hidden clips the zoom, so the card frame never moves */
+.showcase-card:hover .showcase-media img {
+  transform: scale(1.025);
 }
 
 /* half-width cards stack their content vertically so text never gets squeezed into a narrow column */
@@ -666,7 +745,7 @@ section {
 
 /* ---- About ---- */
 #about {
-  padding-top: 56px;
+  padding-top: var(--space-2xl);
   padding-bottom: var(--space-xl);
   margin-bottom: 0;
 }
@@ -853,7 +932,6 @@ section {
 
   .hero-actions {
     gap: 24px;
-    margin-bottom: 32px;
   }
 
   #contact {
@@ -883,6 +961,18 @@ section {
 
   #hero h1 {
     max-width: none;
+    font-size: 2rem; /* fixed size tuned so the short headline breaks at two lines */
+  }
+
+  /* swap to the short copy on small screens */
+  .h1-full,
+  .sub-full {
+    display: none;
+  }
+
+  .h1-short,
+  .sub-short {
+    display: inline;
   }
 
   .hero-sub {
@@ -901,10 +991,21 @@ section {
     justify-content: center;
   }
 
-  /* self-center = shrink to text width instead of stretching, so the underline hugs the words */
-  .hero-cta-secondary {
-    align-self: center;
+  .hero-availability {
     justify-content: center;
+  }
+
+  /* centered layout: side rules read wrong, so each stat centers with no border */
+  .hero-proof {
+    justify-content: center;
+    gap: 24px;
+  }
+
+  .proof-item {
+    border-left: none;
+    padding-left: 0;
+    align-items: center;
+    text-align: center;
   }
 }
 
