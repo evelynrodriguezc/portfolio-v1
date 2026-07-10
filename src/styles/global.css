@@ -869,6 +869,19 @@ section {
 }
 
 @media (max-width: 480px) {
+  #hero {
+    text-align: center;
+  }
+
+  #hero h1 {
+    max-width: none;
+  }
+
+  .hero-sub {
+    margin-left: auto;
+    margin-right: auto; /* auto side margins re-center a width-capped block */
+  }
+
   /* stretch = buttons take full width, easier thumb target and no lonely left-aligned pill */
   .hero-actions {
     flex-direction: column;
@@ -876,8 +889,13 @@ section {
     gap: 16px;
   }
 
-  .hero-cta-primary,
+  .hero-cta-primary {
+    justify-content: center;
+  }
+
+  /* self-center = shrink to text width instead of stretching, so the underline hugs the words */
   .hero-cta-secondary {
+    align-self: center;
     justify-content: center;
   }
 }
