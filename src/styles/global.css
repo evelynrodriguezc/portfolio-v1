@@ -873,6 +873,14 @@ section {
     text-align: center;
   }
 
+  /* top bar joins the centered layout: stacked, centered, instead of pinned to the edges */
+  .hero-top {
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding-right: 0;
+  }
+
   #hero h1 {
     max-width: none;
   }
