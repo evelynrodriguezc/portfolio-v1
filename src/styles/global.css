@@ -273,6 +273,13 @@ section {
   text-align: left;
 }
 
+/* mobile-only copy swap inside interstitials */
+.interstitial .show-mobile { display: none; }
+@media (max-width: 680px) {
+  .interstitial .hide-mobile { display: none; }
+  .interstitial .show-mobile { display: inline; }
+}
+
 /* ---- Hero ---- */
 #hero {
   position: relative;
