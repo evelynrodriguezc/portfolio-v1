@@ -226,7 +226,7 @@ section {
 /* sections default to the 200px+content grid; hero opts out back to normal flow */
 #hero {
   display: block;
-  padding-top: 8px;
+  padding-top: 32px;
 }
 
 .section-side {
@@ -311,7 +311,7 @@ section {
   align-items: center;
   gap: 16px;
   flex-wrap: wrap;
-  margin-bottom: clamp(1.5rem, 3.5vw, 2.5rem); /* fluid gap: grows with screen width but capped, no more giant void */
+  margin-bottom: clamp(2rem, 4.5vw, 3.25rem); /* fluid gap: grows with screen width but capped, no more giant void */
 }
 
 /* below ~1200px the fixed toggle button sits over the container edge, so give the top bar room */
@@ -645,11 +645,13 @@ section {
 }
 
 .showcase-media {
+  position: relative;
   display: block;
   overflow: hidden;
   aspect-ratio: 16 / 9; /* locks image box shape before image loads, no layout jump */
   border-bottom: 1px solid var(--border);
 }
+
 
 .showcase-card--wide .showcase-media {
   aspect-ratio: 21 / 9;
@@ -661,12 +663,28 @@ section {
   object-fit: cover;
   object-position: top;
   display: block;
-  transition: transform 0.5s cubic-bezier(0.22, 0.65, 0.2, 1);
+  transition: filter 0.35s ease;
 }
 
-/* container overflow:hidden clips the zoom, so the card frame never moves */
+/* theme-conditional images: stacked absolutely so opacity can crossfade */
+.showcase-media .theme-dark-only,
+.showcase-media .theme-light-only {
+  position: absolute;
+  inset: 0;
+  transition: opacity 0.4s ease, filter 0.35s ease;
+}
+
+.theme-light-only { opacity: 0; }
+:root[data-theme="light"] .theme-dark-only { opacity: 0; }
+:root[data-theme="light"] .theme-light-only { opacity: 1; }
+
+/* dark-mode hover trick: reveal the light-mode screenshot underneath */
+:root:not([data-theme="light"]) .showcase-card:hover .theme-dark-only { opacity: 0; }
+:root:not([data-theme="light"]) .showcase-card:hover .theme-light-only { opacity: 1; }
+
+/* gentle dim: image steps back so the corner badge reads as the focal point */
 .showcase-card:hover .showcase-media img {
-  transform: scale(1.025);
+  filter: brightness(0.9);
 }
 
 /* half-width cards stack their content vertically so text never gets squeezed into a narrow column */
