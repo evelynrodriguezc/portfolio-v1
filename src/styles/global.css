@@ -152,6 +152,33 @@ a:hover .arrow-out {
   border-color: var(--border-strong);
 }
 
+/* fixed email button: sits below theme toggle, mirrors its circular chrome */
+#email-fixed {
+  position: fixed;
+  top: 68px;
+  right: 20px;
+  z-index: 10;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.15s ease, color 0.2s ease;
+}
+
+#email-fixed:hover {
+  border-color: var(--border-strong);
+  color: var(--accent);
+}
+
+#email-fixed svg {
+  display: block;
+}
+
 /* dark theme shows sun (click = go light), light theme shows moon */
 #theme-toggle .icon-moon {
   display: none;
