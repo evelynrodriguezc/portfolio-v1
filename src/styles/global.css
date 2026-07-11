@@ -179,10 +179,14 @@ a:hover .arrow-out {
   display: block;
 }
 
-/* mobile: push email button lower so it sits clearer of top edge */
+/* mobile: tighter gap under sun button; shift down slightly when modal is open */
 @media (max-width: 680px) {
   #email-fixed {
-    top: 84px;
+    top: 68px;
+  }
+
+  body.modal-open #email-fixed {
+    top: 90px;
   }
 }
 
