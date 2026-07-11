@@ -922,6 +922,12 @@ section {
 /* CV modal: fixed full-screen dim + centered PDF panel */
 .cv-modal[hidden] { display: none; }
 
+/* hide fixed top-right buttons while modal is open — X sits where they were */
+body.modal-open #theme-toggle,
+body.modal-open #email-fixed {
+  display: none;
+}
+
 .cv-modal {
   position: fixed;
   inset: 0;

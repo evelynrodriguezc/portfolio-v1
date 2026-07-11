@@ -239,7 +239,7 @@ import MainLayout from "../layouts/MainLayout.astro";
           <button type="button" class="cv-modal-close" data-cv-close aria-label="Close">✕</button>
         </div>
       </div>
-      <iframe src="/cv.pdf#toolbar=0" class="cv-modal-frame" title="Resume PDF"></iframe>
+      <iframe src="/cv.pdf#toolbar=0&navpanes=0&view=FitH" class="cv-modal-frame" title="Resume PDF"></iframe>
     </div>
   </div>
 </MainLayout>
@@ -267,10 +267,12 @@ import MainLayout from "../layouts/MainLayout.astro";
   const openCv = () => {
     cvModal?.removeAttribute('hidden');
     document.body.style.overflow = 'hidden';
+    document.body.classList.add('modal-open');
   };
   const closeCv = () => {
     cvModal?.setAttribute('hidden', '');
     document.body.style.overflow = '';
+    document.body.classList.remove('modal-open');
   };
   cvOpeners.forEach((el) => el.addEventListener('click', (e) => { e.preventDefault(); openCv(); }));
   cvClosers.forEach((el) => el.addEventListener('click', closeCv));
