@@ -82,7 +82,7 @@ import MainLayout from "../layouts/MainLayout.astro";
         </div>
       </article>
 
-      <article class="showcase-card scroll-reveal" style="--reveal-delay: 0.16s">
+      <article class="showcase-card scroll-reveal showcase-extra" style="--reveal-delay: 0.16s">
         <a href="https://equestria.evelynr.dev" target="_blank" rel="noopener" class="showcase-media">
           <img src="/horses-ss.png" alt="Equestrian business website" loading="lazy" />
         </a>
@@ -101,6 +101,10 @@ import MainLayout from "../layouts/MainLayout.astro";
       </article>
 
     </div>
+    <button type="button" class="showcase-toggle" aria-expanded="false">
+      <span class="showcase-toggle-label">Show more</span>
+      <span class="arrow arrow-down">↓</span>
+    </button>
     </div>
   </section>
 
@@ -139,7 +143,7 @@ import MainLayout from "../layouts/MainLayout.astro";
         </div>
       </article>
 
-      <article class="showcase-card scroll-reveal" style="--reveal-delay: 0.1s">
+      <article class="showcase-card scroll-reveal showcase-extra" style="--reveal-delay: 0.1s">
         <a href="/work/simply-heating" class="showcase-media">
           <img src="/pekan1.png" alt="Simply Heating website" loading="lazy" />
         </a>
@@ -160,6 +164,10 @@ import MainLayout from "../layouts/MainLayout.astro";
       </article>
 
     </div>
+    <button type="button" class="showcase-toggle" aria-expanded="false">
+      <span class="showcase-toggle-label">Show more</span>
+      <span class="arrow arrow-down">↓</span>
+    </button>
     </div>
   </section>
 
@@ -173,13 +181,16 @@ import MainLayout from "../layouts/MainLayout.astro";
     <p class="about-text scroll-reveal">
       I enjoy building software that people actually use. I focus on creating interfaces that are clear, responsive, and built to last. Good frontend engineering is about building products that stay reliable and easy to maintain.
     </p>
-    <ul class="about-facts scroll-reveal" style="--reveal-delay: 0.1s">
+    <ul class="about-facts scroll-reveal" style="--reveal-delay: 0.05s">
       <li>HTML · CSS · JavaScript · React · WordPress</li>
       <li class="fact-extra">Workflow automation: publishing, QA, SMTP/forms</li>
       <li>Systems Engineering degree</li>
       <li>English C1 / Spanish native</li>
       <li class="fact-extra">Remote, international clients</li>
     </ul>
+    <p class="about-cv scroll-reveal" style="--reveal-delay: 0.1s">
+      <a href="/cv.pdf" class="about-cv-link" data-cv-open>View my resume <span class="arrow arrow-out">↗</span></a>
+    </p>
     </div>
   </section>
 
@@ -217,6 +228,20 @@ import MainLayout from "../layouts/MainLayout.astro";
     </div>
   </section>
 
+  <!-- CV modal viewer -->
+  <div id="cv-modal" class="cv-modal" hidden>
+    <div class="cv-modal-backdrop" data-cv-close></div>
+    <div class="cv-modal-panel" role="dialog" aria-modal="true" aria-label="Resume">
+      <div class="cv-modal-header">
+        <span class="cv-modal-title">Resume</span>
+        <div class="cv-modal-actions">
+          <a href="/cv.pdf" download class="cv-modal-btn">Download</a>
+          <button type="button" class="cv-modal-close" data-cv-close aria-label="Close">✕</button>
+        </div>
+      </div>
+      <iframe src="/cv.pdf#toolbar=0" class="cv-modal-frame" title="Resume PDF"></iframe>
+    </div>
+  </div>
 </MainLayout>
 
 <script>
@@ -232,6 +257,36 @@ import MainLayout from "../layouts/MainLayout.astro";
       e.preventDefault();
       target.scrollIntoView();
       history.replaceState(null, '', window.location.pathname);
+    });
+  });
+
+  // CV modal open/close (click, backdrop, close btn, Esc)
+  const cvModal = document.getElementById('cv-modal');
+  const cvOpeners = document.querySelectorAll<HTMLAnchorElement>('[data-cv-open]');
+  const cvClosers = document.querySelectorAll<HTMLElement>('[data-cv-close]');
+  const openCv = () => {
+    cvModal?.removeAttribute('hidden');
+    document.body.style.overflow = 'hidden';
+  };
+  const closeCv = () => {
+    cvModal?.setAttribute('hidden', '');
+    document.body.style.overflow = '';
+  };
+  cvOpeners.forEach((el) => el.addEventListener('click', (e) => { e.preventDefault(); openCv(); }));
+  cvClosers.forEach((el) => el.addEventListener('click', closeCv));
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && cvModal && !cvModal.hasAttribute('hidden')) closeCv();
+  });
+
+  // showcase show-more/less toggle: expands hidden extra card on mobile
+  document.querySelectorAll<HTMLButtonElement>('.showcase-toggle').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const grid = btn.previousElementSibling as HTMLElement | null;
+      if (!grid) return;
+      const expanded = grid.classList.toggle('is-expanded');
+      btn.setAttribute('aria-expanded', String(expanded));
+      const label = btn.querySelector('.showcase-toggle-label');
+      if (label) label.textContent = expanded ? 'Show less' : 'Show more';
     });
   });
 

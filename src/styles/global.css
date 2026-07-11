@@ -812,9 +812,50 @@ section {
   border-color: var(--text-muted);
 }
 
+/* show-more toggle: hidden on desktop, revealed on mobile below */
+.showcase-toggle {
+  display: none;
+}
+
 @media (max-width: 800px) {
   .showcase {
     grid-template-columns: 1fr;
+  }
+
+  /* mobile: extra card hidden until toggle expands its grid */
+  .showcase .showcase-extra {
+    display: none;
+  }
+
+  .showcase.is-expanded .showcase-extra {
+    display: flex;
+  }
+
+  .showcase-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 20px;
+    padding: 10px 22px;
+    border-radius: 999px;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-size: var(--step-0);
+    font-weight: 500;
+    font-family: inherit;
+    cursor: pointer;
+    transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+  }
+
+  .showcase-toggle:hover {
+    border-color: var(--border-strong);
+    color: var(--accent);
+  }
+
+  /* rotate arrow up when expanded — signals collapse action */
+  .showcase-toggle[aria-expanded="true"] .arrow-down {
+    transform: rotate(180deg);
   }
 
   .showcase-card--wide .showcase-media,
@@ -853,6 +894,136 @@ section {
   color: var(--text);
   margin-bottom: var(--space-xl);
   max-width: 42ch;
+}
+
+/* CV link sits after the facts, subtle inline CTA */
+.about-cv {
+  margin-top: var(--space-l);
+}
+
+.about-cv-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--step-0);
+  font-weight: 600;
+  color: var(--accent);
+  border-bottom: 1px solid var(--accent);
+  padding-bottom: 2px;
+  transition: color 0.2s ease, border-color 0.2s ease;
+  cursor: pointer;
+}
+
+.about-cv-link:hover {
+  color: var(--brand-dark);
+  border-color: var(--brand-dark);
+}
+
+/* CV modal: fixed full-screen dim + centered PDF panel */
+.cv-modal[hidden] { display: none; }
+
+.cv-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.cv-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(4px);
+  animation: cv-fade 0.25s ease;
+}
+
+.cv-modal-panel {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 900px);
+  height: min(100%, 90vh);
+  background: var(--surface);
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  animation: cv-in 0.35s cubic-bezier(0.22, 0.65, 0.2, 1);
+}
+
+.cv-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.cv-modal-title {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: var(--step--2);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.cv-modal-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.cv-modal-btn {
+  padding: 8px 18px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--bg);
+  font-size: var(--step--1);
+  font-weight: 600;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.cv-modal-btn:hover {
+  background: var(--brand-dark);
+  color: var(--bg);
+  transform: translateY(-1px);
+}
+
+.cv-modal-close {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.15s ease, color 0.2s ease;
+}
+
+.cv-modal-close:hover {
+  border-color: var(--border-strong);
+  color: var(--accent);
+}
+
+.cv-modal-frame {
+  flex: 1;
+  width: 100%;
+  border: 0;
+  background: var(--bg);
+}
+
+@keyframes cv-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes cv-in {
+  from { opacity: 0; transform: translateY(20px) scale(0.98); }
+  to { opacity: 1; transform: none; }
 }
 
 .about-facts {
@@ -904,25 +1075,14 @@ section {
     padding-top: 40px;
   }
 
-  /* on mobile the ruled rows wrap badly, so facts become chips: same pill language as the card tags */
+  /* mobile: keep ruled rows like desktop but single-column + smaller font */
   .about-facts {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
+    grid-template-columns: 1fr;
   }
 
   .about-facts li {
-    border: 1px solid var(--border);
-    border-radius: 999px;
-    padding: 6px 14px 6px 24px;
     font-size: var(--step--2);
-  }
-
-  /* chip layout: repositioned dot sits inside the pill's left edge */
-  .about-facts li::before {
-    left: 12px;
-    width: 5px;
-    height: 5px;
+    padding: 12px 0 12px 20px;
   }
 
   .about-facts li:hover {
@@ -1011,6 +1171,25 @@ section {
 
 .contact-icon-link svg {
   display: block;
+}
+
+/* email icon nudges every ~5s + flashes to accent — draws the eye without begging */
+@keyframes email-nudge {
+  0%, 88%, 100% { transform: rotate(0); color: var(--text-muted); }
+  90% { transform: rotate(-12deg); color: var(--accent); }
+  92% { transform: rotate(9deg); color: var(--accent); }
+  94% { transform: rotate(-6deg); color: var(--accent); }
+  96% { transform: rotate(3deg); color: var(--accent); }
+  98% { transform: rotate(0); color: var(--accent); }
+}
+
+#email-link {
+  animation: email-nudge 5s ease-in-out infinite;
+}
+
+/* drop animation on hover so original lift + scale hover state wins */
+#email-link:hover {
+  animation: none;
 }
 
 .footer-bar {
