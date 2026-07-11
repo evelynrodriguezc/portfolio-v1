@@ -189,7 +189,7 @@ import MainLayout from "../layouts/MainLayout.astro";
       <li class="fact-extra">Remote, international clients</li>
     </ul>
     <p class="about-cv scroll-reveal" style="--reveal-delay: 0.1s">
-      <a href="/cv.pdf" class="about-cv-link" data-cv-open>View my resume <span class="arrow arrow-out">↗</span></a>
+      <a href="/cv.pdf" target="_blank" rel="noopener" class="about-cv-link" data-cv-open>View my resume <span class="arrow arrow-out">↗</span></a>
     </p>
     </div>
   </section>
@@ -274,7 +274,13 @@ import MainLayout from "../layouts/MainLayout.astro";
     document.body.style.overflow = '';
     document.body.classList.remove('modal-open');
   };
-  cvOpeners.forEach((el) => el.addEventListener('click', (e) => { e.preventDefault(); openCv(); }));
+  cvOpeners.forEach((el) => el.addEventListener('click', (e) => {
+    // mobile: iframe PDF viewer looks zoomed on phones, open in new tab where
+    // native viewer handles pinch-zoom properly
+    if (window.matchMedia('(max-width: 800px)').matches) return;
+    e.preventDefault();
+    openCv();
+  }));
   cvClosers.forEach((el) => el.addEventListener('click', closeCv));
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && cvModal && !cvModal.hasAttribute('hidden')) closeCv();
