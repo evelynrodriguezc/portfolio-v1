@@ -179,6 +179,13 @@ a:hover .arrow-out {
   display: block;
 }
 
+/* mobile: push email button lower so it sits clearer of top edge */
+@media (max-width: 680px) {
+  #email-fixed {
+    top: 84px;
+  }
+}
+
 /* dark theme shows sun (click = go light), light theme shows moon */
 #theme-toggle .icon-moon {
   display: none;
@@ -922,10 +929,13 @@ section {
 /* CV modal: fixed full-screen dim + centered PDF panel */
 .cv-modal[hidden] { display: none; }
 
-/* hide fixed top-right buttons while modal is open — X sits where they were */
-body.modal-open #theme-toggle,
-body.modal-open #email-fixed {
+/* hide theme toggle while modal open — X sits where it was. keep email visible on top */
+body.modal-open #theme-toggle {
   display: none;
+}
+
+body.modal-open #email-fixed {
+  z-index: 110;
 }
 
 .cv-modal {
@@ -1024,6 +1034,22 @@ body.modal-open #email-fixed {
   width: 100%;
   border: 0;
   background: var(--bg);
+  overflow-y: auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+/* each PDF page renders to its own canvas, sized to container width */
+.cv-page {
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  display: block;
+  border-radius: 6px;
+  box-shadow: 0 4px 20px -12px rgba(0, 0, 0, 0.5);
 }
 
 @keyframes cv-fade { from { opacity: 0; } to { opacity: 1; } }

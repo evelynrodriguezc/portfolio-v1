@@ -189,7 +189,7 @@ import MainLayout from "../layouts/MainLayout.astro";
       <li class="fact-extra">Remote, international clients</li>
     </ul>
     <p class="about-cv scroll-reveal" style="--reveal-delay: 0.1s">
-      <a href="/cv.pdf" target="_blank" rel="noopener" class="about-cv-link" data-cv-open>View my resume <span class="arrow arrow-out">↗</span></a>
+      <a href="/cv.pdf" class="about-cv-link" data-cv-open>View my resume <span class="arrow arrow-out">↗</span></a>
     </p>
     </div>
   </section>
@@ -239,7 +239,7 @@ import MainLayout from "../layouts/MainLayout.astro";
           <button type="button" class="cv-modal-close" data-cv-close aria-label="Close">✕</button>
         </div>
       </div>
-      <iframe src="/cv.pdf#toolbar=0&navpanes=0&view=FitH" class="cv-modal-frame" title="Resume PDF"></iframe>
+      <div class="cv-modal-frame" id="cv-pdf-container" tabindex="0" aria-label="Resume PDF"></div>
     </div>
   </div>
 </MainLayout>
@@ -264,23 +264,55 @@ import MainLayout from "../layouts/MainLayout.astro";
   const cvModal = document.getElementById('cv-modal');
   const cvOpeners = document.querySelectorAll<HTMLAnchorElement>('[data-cv-open]');
   const cvClosers = document.querySelectorAll<HTMLElement>('[data-cv-close]');
+
+  // pdf.js: render each page to canvas sized to container so mobile isn't zoomed
+  let cvRendered = false;
+  const renderCv = async () => {
+    if (cvRendered) return;
+    const container = document.getElementById('cv-pdf-container');
+    if (!container) return;
+    try {
+      const pdfjs = await import('pdfjs-dist');
+      // worker copied to public/ as static asset — skips Vite bundling
+      pdfjs.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.mjs';
+      const pdf = await pdfjs.getDocument({ url: '/cv.pdf' }).promise;
+      // container may be 0 wide on first paint after unhide; fall back to viewport
+      const rawWidth = container.clientWidth || Math.min(window.innerWidth - 96, 900);
+      const targetWidth = rawWidth - 32;
+      const dpr = window.devicePixelRatio || 1;
+      for (let i = 1; i <= pdf.numPages; i++) {
+        const page = await pdf.getPage(i);
+        const base = page.getViewport({ scale: 1 });
+        const scale = (targetWidth * dpr) / base.width;
+        const viewport = page.getViewport({ scale });
+        const canvas = document.createElement('canvas');
+        canvas.width = viewport.width;
+        canvas.height = viewport.height;
+        canvas.className = 'cv-page';
+        const ctx = canvas.getContext('2d');
+        if (!ctx) continue;
+        await page.render({ canvasContext: ctx, viewport } as any).promise;
+        container.appendChild(canvas);
+      }
+      cvRendered = true;
+    } catch (err) {
+      console.error('CV render failed:', err);
+      container.innerHTML = '<p style="color:var(--text-muted); padding:24px; text-align:center;">Unable to render PDF. <a href="/cv.pdf" target="_blank" rel="noopener" style="color:var(--accent);">Open in new tab ↗</a></p>';
+    }
+  };
+
   const openCv = () => {
     cvModal?.removeAttribute('hidden');
     document.body.style.overflow = 'hidden';
     document.body.classList.add('modal-open');
+    renderCv();
   };
   const closeCv = () => {
     cvModal?.setAttribute('hidden', '');
     document.body.style.overflow = '';
     document.body.classList.remove('modal-open');
   };
-  cvOpeners.forEach((el) => el.addEventListener('click', (e) => {
-    // mobile: iframe PDF viewer looks zoomed on phones, open in new tab where
-    // native viewer handles pinch-zoom properly
-    if (window.matchMedia('(max-width: 800px)').matches) return;
-    e.preventDefault();
-    openCv();
-  }));
+  cvOpeners.forEach((el) => el.addEventListener('click', (e) => { e.preventDefault(); openCv(); }));
   cvClosers.forEach((el) => el.addEventListener('click', closeCv));
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && cvModal && !cvModal.hasAttribute('hidden')) closeCv();
