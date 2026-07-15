@@ -499,6 +499,14 @@ section {
   background-size: 100% 1px, 100% 1px;
 }
 
+/* avatar waves toward the CTA, so hovering her lights up "Contact me" the same
+   way hovering the link itself does. :has() lets #hero react to a descendant's
+   hover, which a sibling combinator can't reach backward to the earlier CTA. */
+#hero:has(.hero-avatar:hover) .hero-cta-secondary {
+  color: var(--accent);
+  background-size: 100% 1px, 100% 1px;
+}
+
 .hero-proof {
   display: flex;
   gap: 40px;
@@ -1616,6 +1624,46 @@ body.modal-open #email-fixed {
     align-items: center;
     text-align: center;
   }
+}
+
+/* ---- 404 ---- */
+/* centered vertical stack: avatar up top, copy beneath */
+.notfound {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 0.25rem;
+  border-top: none;      /* opt out of the default section divider + 200px grid */
+  padding-top: 0;
+  margin-bottom: 0;      /* base section rule adds one; would reintroduce scroll */
+  /* fill one viewport minus main's 40px top + 100px bottom padding: no scroll */
+  min-height: calc(100dvh - 140px);
+}
+
+.notfound-avatar img {
+  width: clamp(140px, 22vw, 200px);
+  height: auto;
+  border-radius: 20px;
+}
+
+.notfound-code {
+  font-size: var(--step-2);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  margin-bottom: var(--space-2xs);
+}
+
+.notfound-text h1 {
+  margin-bottom: var(--space-s);
+}
+
+.notfound-sub {
+  font-size: var(--step-1);
+  max-width: 42ch;
+  margin: 0 auto var(--space-l);
 }
 
 /* users with "reduce motion" set in their OS get a still site: accessibility requirement, not optional */

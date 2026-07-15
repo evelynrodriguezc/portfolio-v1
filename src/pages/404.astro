@@ -1,0 +1,26 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+---
+
+<MainLayout
+  title="404 — Evelyn R."
+  description="This page could not be found. Head back to Evelyn's portfolio home."
+>
+  <section class="notfound">
+    <picture class="notfound-avatar">
+      <img
+        src="/404-avatar.png"
+        alt="Evelyn — 3D avatar working on a laptop"
+        width="1024"
+        height="1536"
+        loading="eager"
+      />
+    </picture>
+    <div class="notfound-text">
+      <p class="notfound-code">404</p>
+      <h1>This page took a wrong turn.</h1>
+      <p class="notfound-sub">The link may be broken or the page has moved. Let's get you back to solid ground.</p>
+      <a href="/" class="hero-cta-primary">Back to home <span class="arrow">→</span></a>
+    </div>
+  </section>
+</MainLayout>
