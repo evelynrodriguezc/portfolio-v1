@@ -636,10 +636,10 @@ section {
 @media (max-width: 680px) {
   .hero-avatar {
     position: fixed;
-    left: 57%; /* nudged right of center so she doesn't sit dead-center under the text */
+    left: 68%; /* sits right of center so she doesn't cover the text/interstitial */
     bottom: 0;
     z-index: 3;
-    width: min(230px, 57vw);
+    width: min(255px, 62vw);
     /* --peek-y drops the figure so only head-to-bust peeks above the fold; shorter
        screens raise it (drop her further) so she clears the stats + their rule lines */
     --peek-y: 6%;
@@ -1640,7 +1640,7 @@ button.hero-cta-primary {
   /* full viewport tall so the bust-peek avatar has the hero's own bottom space to occupy,
      and the next section (interstitial) always starts below the fold — no overlap at rest */
   #hero {
-    min-height: 80dvh;
+    min-height: 85dvh;
     padding-top: 72px;
     padding-bottom: 40px;
     margin-bottom: 40px;
