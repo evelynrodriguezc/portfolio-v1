@@ -295,8 +295,8 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || "1x0000000
 </MainLayout>
 
 <script>
-  const user = ['evelyn', 'rodriguez', 'c0'].join('');
-  const domain = ['gmail', 'com'].join('.');
+  const user = ['h', 'i'].join('');
+  const domain = ['evelynr', 'dev'].join('.');
   const link = document.getElementById('email-link') as HTMLAnchorElement | null;
   if (link) link.href = `mailto:${user}@${domain}`;
 
@@ -420,7 +420,10 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || "1x0000000
     const el = document.getElementById('turnstile-widget');
     const ts = (window as any).turnstile;
     if (!el || !ts) return;
-    if (turnstileWidgetId !== null) { try { ts.remove(turnstileWidgetId); } catch {} }
+    // fully tear down the previous widget (remove() alone can leave its iframe behind,
+    // stacking a light + dark widget when the theme toggles)
+    if (turnstileWidgetId !== null) { try { ts.remove(turnstileWidgetId); } catch {} turnstileWidgetId = null; }
+    el.innerHTML = '';
     turnstileWidgetId = ts.render(el, { sitekey: el.getAttribute('data-sitekey'), theme: turnstileTheme() });
   };
   (window as any).onloadTurnstileCallback = renderTurnstile;

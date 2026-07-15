@@ -66,8 +66,8 @@ const canonical = new URL(Astro.url.pathname, "https://evelynr.dev").href;
       // assemble mailto for fixed email button — address never appears in HTML source
       const emailFixed = document.getElementById('email-fixed') as HTMLAnchorElement | null;
       if (emailFixed) {
-        const user = ['evelyn', 'rodriguez', 'c0'].join('');
-        const domain = ['gmail', 'com'].join('.');
+        const user = ['h', 'i'].join('');
+        const domain = ['evelynr', 'dev'].join('.');
         emailFixed.href = `mailto:${user}@${domain}`;
       }
 

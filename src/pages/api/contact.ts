@@ -13,7 +13,7 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
 // where messages are delivered, and the verified sender (must be an address on a
 // domain you've verified in Resend — see setup notes)
-const TO_EMAIL = 'evelynrodriguezc0@gmail.com';
+const TO_EMAIL = 'hi@evelynr.dev';
 const FROM_EMAIL = 'Portfolio <hi@evelynr.dev>';
 
 export const POST: APIRoute = async ({ request, clientAddress }) => {
