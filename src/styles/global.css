@@ -637,12 +637,12 @@ section {
   .hero-avatar {
     position: fixed;
     left: 68%; /* sits right of center so she doesn't cover the text/interstitial */
-    bottom: 0;
+    bottom: 7dvh; /* lifts her feet up to rest just above the hero divider line */
     z-index: 3;
-    width: min(255px, 62vw);
+    width: min(270px, 64vw);
     /* --peek-y drops the figure so only head-to-bust peeks above the fold; shorter
        screens raise it (drop her further) so she clears the stats + their rule lines */
-    --peek-y: 6%;
+    --peek-y: 0%;
     transform: translate(-50%, var(--peek-y));
     pointer-events: none;
     transition: transform 0.55s ease, opacity 0.55s ease;

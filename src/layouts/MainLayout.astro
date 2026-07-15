@@ -75,24 +75,11 @@ const canonical = new URL(Astro.url.pathname, "https://evelynr.dev").href;
       // (class has styles only under 680px, so this is inert on desktop)
       const heroAvatar = document.querySelector<HTMLElement>('.hero-avatar');
       if (heroAvatar) {
-        const applyState = () => {
+        const onScroll = () => {
           heroAvatar.classList.toggle('avatar-away', window.scrollY > 30);
         };
-        // on mobile, slide her away after a few seconds even if the visitor never
-        // scrolls; any scroll cancels the timer and hands control back to applyState
-        let autoHideTimer: number | null = null;
-        if (window.matchMedia('(max-width: 680px)').matches) {
-          autoHideTimer = window.setTimeout(() => heroAvatar.classList.add('avatar-away'), 5000);
-        }
-        const onScroll = () => {
-          if (autoHideTimer !== null) {
-            clearTimeout(autoHideTimer);
-            autoHideTimer = null;
-          }
-          applyState();
-        };
         window.addEventListener('scroll', onScroll, { passive: true });
-        applyState();
+        onScroll();
       }
 
       // scroll reveal: IntersectionObserver toggles .is-visible once, then unobserves.
