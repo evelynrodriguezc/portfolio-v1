@@ -629,20 +629,20 @@ section {
   }
 }
 
-/* mobile: bust-up peek rising from the bottom edge of the viewport. It paints
-   behind the page content (negative z-index inside main's stacking context), so
-   it structurally cannot cover CTAs or stats; the hero also reserves bottom
-   padding so text and bust don't visually collide at rest */
+/* mobile: bust-up peek rising from the bottom edge of the viewport. She sits in FRONT
+   of the page content so she cleanly occludes the interstitial/divider behind her
+   (pointer-events:none lets taps pass through); she rests below the stats so nothing
+   important is covered, and slides away on scroll */
 @media (max-width: 680px) {
   .hero-avatar {
     position: fixed;
     left: 57%; /* nudged right of center so she doesn't sit dead-center under the text */
     bottom: 0;
-    z-index: -1;
+    z-index: 3;
     width: min(230px, 57vw);
     /* --peek-y drops the figure so only head-to-bust peeks above the fold; shorter
        screens raise it (drop her further) so she clears the stats + their rule lines */
-    --peek-y: 20%;
+    --peek-y: 6%;
     transform: translate(-50%, var(--peek-y));
     pointer-events: none;
     transition: transform 0.55s ease, opacity 0.55s ease;
@@ -1640,7 +1640,7 @@ button.hero-cta-primary {
   /* full viewport tall so the bust-peek avatar has the hero's own bottom space to occupy,
      and the next section (interstitial) always starts below the fold — no overlap at rest */
   #hero {
-    min-height: 100dvh;
+    min-height: 80dvh;
     padding-top: 72px;
     padding-bottom: 40px;
     margin-bottom: 40px;
