@@ -336,6 +336,13 @@ section {
   .interstitial .show-mobile { display: inline; }
 }
 
+/* proof stat label shortens to just "websites" on mobile */
+.proof-label .pl-short { display: none; }
+@media (max-width: 680px) {
+  .proof-label .pl-full { display: none; }
+  .proof-label .pl-short { display: inline; }
+}
+
 /* ---- Hero ---- */
 #hero {
   position: relative;
@@ -599,10 +606,21 @@ section {
     bottom: 0;
     z-index: -1;
     width: min(230px, 58vw);
-    /* second translate term drops the figure so only head-to-bust (top ~45%) peeks above the fold */
-    transform: translate(-50%, 55%);
+    /* --peek-y drops the figure so only head-to-bust peeks above the fold; shorter
+       screens raise it (drop her further) so she clears the stats + their rule lines */
+    --peek-y: 55%;
+    transform: translate(-50%, var(--peek-y));
     pointer-events: none;
     transition: transform 0.55s ease, opacity 0.55s ease;
+  }
+
+  /* short viewports: the tall hero content reaches into the peek zone, so shrink the
+     figure and drop her lower to keep her below the proof stats and the "Contact me" rule */
+  @media (max-height: 740px) {
+    .hero-avatar {
+      width: min(190px, 50vw);
+      --peek-y: 74%;
+    }
   }
 
   .hero-avatar img {
@@ -641,7 +659,7 @@ section {
 
 @keyframes avatar-peek-in {
   from { transform: translate(-50%, 120%); }
-  to { transform: translate(-50%, 55%); }
+  to { transform: translate(-50%, var(--peek-y)); }
 }
 
 /* dark mode gets no filter: a black drop-shadow is invisible on #121213, and the
@@ -1498,8 +1516,15 @@ body.modal-open #email-fixed {
   /* Hero */
   #hero {
     padding-top: 72px;
-    padding-bottom: 200px; /* clears the bust-peek avatar zone (~180px) at the viewport bottom */
-    margin-bottom: 56px;
+    padding-bottom: 150px; /* reserves room below the stats for the bust-peek avatar without a dead gap */
+    margin-bottom: 40px;
+  }
+
+  /* the fixed avatar peeks in this zone; a hard top rule here would slice across her,
+     so on mobile the interstitial separates on whitespace alone */
+  .interstitial {
+    border-top: none;
+    padding-top: 0;
   }
 
   .eyebrow {

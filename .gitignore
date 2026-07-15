@@ -1,10 +1,14 @@
 # build output
 dist/
+.vercel/
 # generated types
 .astro/
 
 # dependencies
 node_modules/
+
+# local npm config (minimum-release-age is a local-only safety setting; breaks Vercel install)
+.npmrc
 
 # logs
 npm-debug.log*
