@@ -639,10 +639,10 @@ section {
     left: 57%; /* nudged right of center so she doesn't sit dead-center under the text */
     bottom: 0;
     z-index: -1;
-    width: min(255px, 62vw);
+    width: min(230px, 57vw);
     /* --peek-y drops the figure so only head-to-bust peeks above the fold; shorter
        screens raise it (drop her further) so she clears the stats + their rule lines */
-    --peek-y: 36%;
+    --peek-y: 20%;
     transform: translate(-50%, var(--peek-y));
     pointer-events: none;
     transition: transform 0.55s ease, opacity 0.55s ease;
@@ -652,8 +652,8 @@ section {
      figure and drop her lower to keep her below the proof stats and the "Contact me" rule */
   @media (max-height: 740px) {
     .hero-avatar {
-      width: min(210px, 54vw);
-      --peek-y: 54%;
+      width: min(196px, 50vw);
+      --peek-y: 52%;
     }
   }
 
