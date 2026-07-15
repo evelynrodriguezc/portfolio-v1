@@ -204,6 +204,7 @@ a:hover .arrow-out {
 }
 
 main {
+  --main-pad-y: 140px;   /* 40px top + 100px bottom; kept in sync so .notfound can fill the viewport */
   max-width: 1080px;
   margin: 0 auto;
   padding: 40px 0 100px;
@@ -668,22 +669,22 @@ section {
   transform: translateX(-50%);
   border-radius: 50%;
   /* a black shadow can't read on the #121213 background, so dark mode grounds her
-     with a faint accent-lit floor pool instead. The dense plateau center under the
+     with a faint neutral-gray floor pool instead. The dense plateau center under the
      contact points (instead of an immediate falloff) is what sells ground contact */
   background: radial-gradient(closest-side,
-    rgba(122, 147, 229, 0.55) 0%,
-    rgba(122, 147, 229, 0.45) 35%,
-    rgba(122, 147, 229, 0) 100%);
-  filter: blur(6px);
+    rgba(190, 192, 200, 0.32) 0%,
+    rgba(190, 192, 200, 0.24) 40%,
+    rgba(190, 192, 200, 0) 100%);
+  filter: blur(9px);
   pointer-events: none;
 }
 
 :root[data-theme="light"] .hero-avatar::after {
   background: radial-gradient(closest-side,
-    rgba(0, 0, 0, 0.42) 0%,
-    rgba(0, 0, 0, 0.36) 35%,
+    rgba(0, 0, 0, 0.34) 0%,
+    rgba(0, 0, 0, 0.26) 40%,
     rgba(0, 0, 0, 0) 100%);
-  filter: blur(4px);
+  filter: blur(6px);
 }
 
 /* desktop-only: the entrance fade's fill-mode would pin opacity at 1 and defeat the
@@ -1490,6 +1491,7 @@ body.modal-open #email-fixed {
   }
 
   main {
+    --main-pad-y: 84px;   /* 28px top + 56px bottom */
     padding: 28px 0 56px;
   }
 
@@ -1638,8 +1640,8 @@ body.modal-open #email-fixed {
   border-top: none;      /* opt out of the default section divider + 200px grid */
   padding-top: 0;
   margin-bottom: 0;      /* base section rule adds one; would reintroduce scroll */
-  /* fill one viewport minus main's 40px top + 100px bottom padding: no scroll */
-  min-height: calc(100dvh - 140px);
+  /* fill one viewport minus main's vertical padding (--main-pad-y adapts per breakpoint): no scroll */
+  min-height: calc(100dvh - var(--main-pad-y));
 }
 
 .notfound-avatar img {
