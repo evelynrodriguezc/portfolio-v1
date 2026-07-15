@@ -586,7 +586,7 @@ section {
 @media (max-width: 680px) {
   .hero-avatar {
     position: fixed;
-    left: 50%;
+    left: 57%; /* nudged right of center so she doesn't sit dead-center under the text */
     bottom: 0;
     z-index: -1;
     width: min(230px, 58vw);
@@ -618,6 +618,21 @@ section {
   .hero-avatar {
     transition: none; /* appears/disappears instantly instead of sliding */
   }
+}
+
+/* mobile entrance: rises from below the edge after the text reveal stagger.
+   `backwards` keeps her hidden during the delay; NO forwards fill because the
+   end state IS the resting transform — a lingering fill would outrank the
+   .avatar-away class and break the scroll-away slide */
+@media (max-width: 680px) and (prefers-reduced-motion: no-preference) {
+  .hero-avatar {
+    animation: avatar-peek-in 0.7s cubic-bezier(0.22, 0.65, 0.2, 1) 0.45s backwards;
+  }
+}
+
+@keyframes avatar-peek-in {
+  from { transform: translate(-50%, 120%); }
+  to { transform: translate(-50%, 55%); }
 }
 
 /* dark mode gets no filter: a black drop-shadow is invisible on #121213, and the
