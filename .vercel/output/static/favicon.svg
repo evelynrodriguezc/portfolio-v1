@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <style>
+    text {
+      font: 700 120px 'Space Grotesk', system-ui, sans-serif;
+      fill: #1E1B17;
+    }
+    tspan { fill: #4A62C4; }
+    @media (prefers-color-scheme: dark) {
+      text { fill: #E9EAEC; }
+      tspan { fill: #7A93E5; }
+    }
+  </style>
+  <text x="64" y="94" text-anchor="middle">e<tspan>.</tspan></text>
+</svg>

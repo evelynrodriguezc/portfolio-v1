@@ -349,7 +349,7 @@ section {
   align-items: center;
   gap: 16px;
   flex-wrap: wrap;
-  margin-bottom: clamp(2rem, 4.5vw, 3.25rem); /* fluid gap: grows with screen width but capped, no more giant void */
+  margin-bottom: clamp(2rem, 4.5vw, 3.5rem); /* fluid gap: grows with screen width but capped, no more giant void */
 }
 
 /* below ~1200px the fixed toggle button sits over the container edge, so give the top bar room */
@@ -392,12 +392,12 @@ section {
 }
 
 #hero h1 {
-  /* one size down from before: caps at 4.1rem instead of 5.5rem */
-  font-size: clamp(2.3rem, 1.4rem + 4.2vw, 4.1rem);
+  /* cap tuned so "who keeps real sites" holds one line in the ~615px grid column */
+  font-size: clamp(2.3rem, 1.2rem + 3.2vw, 3.3rem);
   text-transform: uppercase;
   line-height: 1.05;
   letter-spacing: -0.02em;
-  margin-bottom: 1.25rem; /* line breaks are explicit <br>s now, no width cap needed */
+  margin-bottom: 2.5rem; /* line breaks are explicit <br>s now, no width cap needed */
 }
 
 /* full/short pairs: desktop and mobile get different copy, CSS swaps which one renders */
@@ -414,7 +414,7 @@ section {
   font-size: var(--step-1);
   line-height: 1.65;
   color: var(--text-muted);
-  margin-bottom: 1.75rem;
+  margin-bottom: 2.5rem;
   max-width: 52ch;
 }
 
@@ -422,7 +422,7 @@ section {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 28px;
+  gap: 20px; /* tight enough that button + availability share one row in the grid column */
 }
 
 .hero-availability {
@@ -437,7 +437,7 @@ section {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  padding: 18px 40px;
+  padding: 15px 32px;
   border-radius: 999px; /* huge radius = pill shape regardless of button height */
   background: var(--accent);
   color: var(--bg);
@@ -479,7 +479,7 @@ section {
   display: flex;
   gap: 40px;
   flex-wrap: wrap;
-  margin-top: 1.75rem; /* same air above and below the CTA row: even vertical rhythm */
+  margin-top: 2.25rem; /* same air above and below the CTA row: even vertical rhythm */
 }
 
 .proof-item {
@@ -506,6 +506,134 @@ section {
   text-transform: uppercase;
   color: var(--text-muted);
   white-space: nowrap;
+}
+
+/* ---- Hero avatar ----
+   two-column grid only above the mobile breakpoint: text keeps column 1,
+   avatar takes column 2 and spans headline→stats so its bottom edge sits
+   on the stats-row baseline */
+@media (min-width: 681px) {
+  #hero {
+    display: grid;
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); /* 60/40 split */
+    column-gap: clamp(24px, 4vw, 56px);
+    row-gap: 0; /* kill the 48px gap inherited from the generic section grid; margins own the rhythm */
+    /* svh (not vh) ignores mobile browser chrome; minus main's 40px top padding so
+       the hero's bottom border lands exactly on the first-viewport fold */
+    min-height: calc(100svh - 40px);
+    align-content: center; /* extra viewport height splits evenly above and below the content */
+  }
+
+  .hero-top {
+    grid-column: 1 / -1; /* name/status bar stays full width above both columns */
+  }
+
+  #hero h1,
+  .hero-sub,
+  .hero-actions,
+  .hero-proof {
+    grid-column: 1; /* pin text flow to the left column so auto-placement can't drift */
+  }
+
+  .hero-avatar {
+    grid-column: 2;
+    grid-row: 2 / 6; /* spans h1, sub, actions, proof rows */
+    align-self: start; /* top edge lines up with the top of the headline */
+    justify-self: center;
+    position: relative; /* anchors the contact-shadow pseudo-element */
+    isolation: isolate; /* own stacking context so the shadow's z-index: -1 stays behind the img only */
+  }
+
+  .hero-avatar img {
+    display: block;
+    /* second min() term is the short-viewport height budget converted to a width
+       (× the image's 800/1342 ratio). A plain max-height would squash the image:
+       with an explicit width set, the browser clamps height WITHOUT recomputing
+       width, distorting the figure. Sizing width-only keeps the ratio intact. */
+    width: min(clamp(210px, 26vw, 340px), calc((100svh - 270px) * 0.596));
+    height: auto;
+  }
+}
+
+/* typographic hero stands alone on phones */
+@media (max-width: 680px) {
+  .hero-avatar {
+    display: none;
+  }
+}
+
+/* dark is the default theme (no data-theme attribute); accent glow only in dark */
+.hero-avatar img {
+  filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.5))
+          drop-shadow(0 0 32px rgba(122, 147, 229, 0.12));
+}
+
+:root[data-theme="light"] .hero-avatar img {
+  filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.18));
+}
+
+/* contact shadow: soft ellipse under the feet grounds the figure */
+.hero-avatar::after {
+  content: '';
+  position: absolute;
+  left: 44%; /* centered between the two staggered feet, not on the image midline */
+  /* ground plane, not underline: center sits ~2.5% above the image bottom, at the BACK
+     shoe's sole; the taller ellipse gives depth so the front shoe lands on its lower edge */
+  bottom: -2%;
+  z-index: -1; /* behind the img within the isolated wrapper */
+  width: 64%;
+  height: 9%;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  /* a black shadow can't read on the #121213 background, so dark mode grounds her
+     with a faint accent-lit floor pool instead. The dense plateau center under the
+     contact points (instead of an immediate falloff) is what sells ground contact */
+  background: radial-gradient(closest-side,
+    rgba(122, 147, 229, 0.55) 0%,
+    rgba(122, 147, 229, 0.45) 35%,
+    rgba(122, 147, 229, 0) 100%);
+  filter: blur(6px);
+  pointer-events: none;
+}
+
+:root[data-theme="light"] .hero-avatar::after {
+  background: radial-gradient(closest-side,
+    rgba(0, 0, 0, 0.42) 0%,
+    rgba(0, 0, 0, 0.36) 35%,
+    rgba(0, 0, 0, 0) 100%);
+  filter: blur(4px);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* fade lives on the wrapper, float on the img: two transforms can't share one element */
+  .hero-avatar {
+    opacity: 0;
+    animation: avatar-in 0.75s cubic-bezier(0.22, 0.65, 0.2, 1) 0.3s forwards;
+  }
+
+  .hero-avatar img {
+    animation: avatar-float 7s ease-in-out infinite alternate;
+  }
+
+  /* same clock as the float but inverted: avatar up = shadow smaller and fainter */
+  .hero-avatar::after {
+    animation: shadow-float 7s ease-in-out infinite alternate;
+  }
+}
+
+@keyframes avatar-in {
+  to { opacity: 1; }
+}
+
+/* gentle 5px lift: any higher and the fixed shadow reads as hovering */
+@keyframes avatar-float {
+  from { transform: translateY(0); }
+  to { transform: translateY(-5px); }
+}
+
+@keyframes shadow-float {
+  from { transform: translateX(-50%) scale(1); opacity: 1; }
+  to { transform: translateX(-50%) scale(0.9); opacity: 0.8; }
 }
 
 .eyebrow {
