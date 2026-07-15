@@ -127,6 +127,23 @@ a:hover .arrow-out {
   transform: translate(2px, -2px); /* ↗ moves along its own diagonal */
 }
 
+/* "Get in touch" arrow drifts right and back every few seconds to invite the click;
+   hover stops the loop and holds the nudge. The button isn't an <a>, so it needs its own rules */
+@keyframes cta-arrow-nudge {
+  0%, 68%, 100% { transform: translateX(0); }
+  82% { transform: translateX(5px); }
+  91% { transform: translateX(2px); }
+}
+
+[data-form-open] .arrow {
+  animation: cta-arrow-nudge 3.2s ease-in-out infinite;
+}
+
+[data-form-open]:hover .arrow {
+  animation: none;
+  transform: translateX(4px);
+}
+
 /* ---- Theme toggle ---- */
 #theme-toggle {
   position: fixed; /* stays pinned to the viewport corner while page scrolls */
@@ -438,6 +455,23 @@ section {
   }
 }
 
+/* same terminal cursor trailing the "how i work" paragraph */
+.about-text::after {
+  content: '';
+  display: inline-block;
+  width: 0.5ch;
+  height: 0.13em;
+  margin-left: 0.16em;
+  background: var(--accent);
+  animation: cursor-blink 1.2s steps(1) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-text::after {
+    animation: none;
+  }
+}
+
 .accent-word {
   color: var(--accent);
 }
@@ -605,10 +639,10 @@ section {
     left: 57%; /* nudged right of center so she doesn't sit dead-center under the text */
     bottom: 0;
     z-index: -1;
-    width: min(230px, 58vw);
+    width: min(255px, 62vw);
     /* --peek-y drops the figure so only head-to-bust peeks above the fold; shorter
        screens raise it (drop her further) so she clears the stats + their rule lines */
-    --peek-y: 55%;
+    --peek-y: 36%;
     transform: translate(-50%, var(--peek-y));
     pointer-events: none;
     transition: transform 0.55s ease, opacity 0.55s ease;
@@ -618,8 +652,8 @@ section {
      figure and drop her lower to keep her below the proof stats and the "Contact me" rule */
   @media (max-height: 740px) {
     .hero-avatar {
-      width: min(190px, 50vw);
-      --peek-y: 74%;
+      width: min(210px, 54vw);
+      --peek-y: 54%;
     }
   }
 
@@ -1278,6 +1312,16 @@ body.modal-open #email-fixed {
   gap: 12px;
 }
 
+/* native-viewer fallback when pdf.js can't render (fills the modal frame) */
+.cv-fallback-frame {
+  flex: 1;
+  width: 100%;
+  min-height: 480px;
+  border: 0;
+  border-radius: 6px;
+  background: #fff;
+}
+
 /* each PDF page renders to its own canvas, sized to container width */
 .cv-page {
   width: 100%;
@@ -1293,6 +1337,96 @@ body.modal-open #email-fixed {
   from { opacity: 0; transform: translateY(20px) scale(0.98); }
   to { opacity: 1; transform: none; }
 }
+
+/* a <button> using the pill CTA needs the native chrome reset */
+button.hero-cta-primary {
+  border: 0;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+/* ---- Contact CTA + form modal ---- */
+.contact-cta-row {
+  margin-bottom: 20px;
+}
+
+/* narrower than the PDF panel, and height hugs the form instead of filling the viewport */
+.cv-modal-panel--form {
+  width: min(100%, 460px);
+  height: auto;
+  max-height: 90vh;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 22px 22px 24px;
+  overflow-y: auto;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: var(--step--2);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.form-count {
+  font-weight: 400;
+  letter-spacing: 0.03em;
+  color: var(--text-muted);
+  opacity: 0.7;
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 11px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  font: inherit;
+  font-size: var(--step-0);
+  transition: border-color 0.2s ease;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.contact-form textarea {
+  resize: vertical;
+  min-height: 110px;
+}
+
+.form-submit {
+  align-self: flex-start;
+  margin-top: 4px;
+}
+
+.form-status {
+  margin: 0;
+  min-height: 1.2em;
+  font-size: var(--step--1);
+  color: var(--text-muted);
+}
+
+.form-status.is-error { color: #e5534b; }
+.form-status.is-success { color: var(--accent); }
 
 .about-facts {
   list-style: none;
@@ -1387,7 +1521,7 @@ body.modal-open #email-fixed {
   font-size: var(--step-0);
   line-height: 1.7;
   color: var(--text-muted);
-  margin-bottom: var(--space-xl);
+  margin-bottom: var(--space-m);
 }
 
 .contact-links-row {
@@ -1439,21 +1573,10 @@ body.modal-open #email-fixed {
 
 .contact-icon-link svg {
   display: block;
+  width: 31px;  /* 10% larger than the base 28px */
+  height: 31px;
 }
 
-/* email icon nudges every ~5s + flashes to accent — draws the eye without begging */
-@keyframes email-nudge {
-  0%, 88%, 100% { transform: rotate(0); color: var(--text-muted); }
-  90% { transform: rotate(-12deg); color: var(--accent); }
-  92% { transform: rotate(9deg); color: var(--accent); }
-  94% { transform: rotate(-6deg); color: var(--accent); }
-  96% { transform: rotate(3deg); color: var(--accent); }
-  98% { transform: rotate(0); color: var(--accent); }
-}
-
-#email-link {
-  animation: email-nudge 5s ease-in-out infinite;
-}
 
 /* drop animation on hover so original lift + scale hover state wins */
 #email-link:hover {
@@ -1514,9 +1637,12 @@ body.modal-open #email-fixed {
   }
 
   /* Hero */
+  /* full viewport tall so the bust-peek avatar has the hero's own bottom space to occupy,
+     and the next section (interstitial) always starts below the fold — no overlap at rest */
   #hero {
+    min-height: 100dvh;
     padding-top: 72px;
-    padding-bottom: 150px; /* reserves room below the stats for the bust-peek avatar without a dead gap */
+    padding-bottom: 40px;
     margin-bottom: 40px;
   }
 

@@ -193,7 +193,6 @@ import MainLayout from "../layouts/MainLayout.astro";
     </p>
     <ul class="about-facts scroll-reveal" style="--reveal-delay: 0.05s">
       <li>HTML · CSS · JavaScript · React · WordPress</li>
-      <li class="fact-extra">Workflow automation: publishing, QA, SMTP/forms</li>
       <li>Systems Engineering degree</li>
       <li>English C1 / Spanish native</li>
       <li class="fact-extra">Remote, international clients</li>
@@ -213,7 +212,10 @@ import MainLayout from "../layouts/MainLayout.astro";
     <div class="section-content">
     <h2 class="contact-heading scroll-reveal">Let's work <span class="accent-word">together</span>.</h2>
     <p class="contact-sub scroll-reveal" style="--reveal-delay: 0.08s">Available for remote work, contract or full-time: frontend, WordPress, workflow automation.</p>
-    <div class="contact-links-row scroll-reveal" style="--reveal-delay: 0.14s">
+    <div class="contact-cta-row scroll-reveal" style="--reveal-delay: 0.12s">
+      <button type="button" class="hero-cta-primary" data-form-open>Get in touch <span class="arrow">→</span></button>
+    </div>
+    <div class="contact-links-row scroll-reveal" style="--reveal-delay: 0.16s">
       <a href="#contact" class="contact-icon-link" id="email-link" aria-label="Email">
         <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <rect x="1.5" y="4" width="21" height="16" rx="2.2"/>
@@ -252,13 +254,46 @@ import MainLayout from "../layouts/MainLayout.astro";
       <div class="cv-modal-frame" id="cv-pdf-container" tabindex="0" aria-label="Resume PDF"></div>
     </div>
   </div>
+
+  <!-- Contact form modal -->
+  <div id="contact-modal" class="cv-modal" hidden>
+    <div class="cv-modal-backdrop" data-form-close></div>
+    <div class="cv-modal-panel cv-modal-panel--form" role="dialog" aria-modal="true" aria-label="Send a message">
+      <div class="cv-modal-header">
+        <span class="cv-modal-title">Send a message</span>
+        <div class="cv-modal-actions">
+          <button type="button" class="cv-modal-close" data-form-close aria-label="Close">✕</button>
+        </div>
+      </div>
+      <form id="contact-form" class="contact-form" novalidate>
+        <!-- Replace with your free Web3Forms access key from https://web3forms.com (public by design) -->
+        <input type="hidden" name="access_key" value="YOUR_WEB3FORMS_ACCESS_KEY" />
+        <input type="hidden" name="subject" value="New message from evelynr.dev" />
+        <input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" style="display:none" aria-hidden="true" />
+        <label class="form-field">
+          <span class="form-label">Name</span>
+          <input type="text" name="name" required maxlength="80" autocomplete="name" />
+        </label>
+        <label class="form-field">
+          <span class="form-label">Email</span>
+          <input type="email" name="email" required maxlength="120" autocomplete="email" />
+        </label>
+        <label class="form-field">
+          <span class="form-label">Message <span class="form-count" id="msg-count">0 / 1000</span></span>
+          <textarea name="message" rows="5" required maxlength="1000"></textarea>
+        </label>
+        <button type="submit" class="hero-cta-primary form-submit">Send <span class="arrow">→</span></button>
+        <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </div>
 </MainLayout>
 
 <script>
   const user = ['evelyn', 'rodriguez', 'c0'].join('');
   const domain = ['gmail', 'com'].join('.');
-  const link = document.getElementById('email-link') as HTMLAnchorElement;
-  link.href = `mailto:${user}@${domain}`;
+  const link = document.getElementById('email-link') as HTMLAnchorElement | null;
+  if (link) link.href = `mailto:${user}@${domain}`;
 
   document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
     anchor.addEventListener('click', (e) => {
@@ -306,8 +341,19 @@ import MainLayout from "../layouts/MainLayout.astro";
       }
       cvRendered = true;
     } catch (err) {
-      console.error('CV render failed:', err);
-      container.innerHTML = '<p style="color:var(--text-muted); padding:24px; text-align:center;">Unable to render PDF. <a href="/cv.pdf" target="_blank" rel="noopener" style="color:var(--accent);">Open in new tab ↗</a></p>';
+      // pdf.js can fail in some browsers (e.g. module-worker quirks); fall back to the
+      // browser's native PDF viewer so the resume still shows inline instead of a dead end
+      console.error('CV render failed, falling back to native viewer:', err);
+      container.innerHTML = '';
+      const frame = document.createElement('iframe');
+      frame.src = '/cv.pdf#view=FitH';
+      frame.title = 'Resume PDF';
+      frame.className = 'cv-fallback-frame';
+      frame.addEventListener('error', () => {
+        container.innerHTML = '<p style="color:var(--text-muted); padding:24px; text-align:center;">Unable to display the PDF here. <a href="/cv.pdf" target="_blank" rel="noopener" style="color:var(--accent);">Open in new tab ↗</a></p>';
+      });
+      container.appendChild(frame);
+      cvRendered = true;
     }
   };
 
@@ -327,6 +373,91 @@ import MainLayout from "../layouts/MainLayout.astro";
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && cvModal && !cvModal.hasAttribute('hidden')) closeCv();
   });
+
+  // contact form modal (open/close mirrors the CV modal)
+  const contactModal = document.getElementById('contact-modal');
+  const formOpeners = document.querySelectorAll('[data-form-open]');
+  const formClosers = document.querySelectorAll('[data-form-close]');
+  const openForm = () => {
+    contactModal?.removeAttribute('hidden');
+    document.body.style.overflow = 'hidden';
+    document.body.classList.add('modal-open');
+  };
+  const closeForm = () => {
+    contactModal?.setAttribute('hidden', '');
+    document.body.style.overflow = '';
+    document.body.classList.remove('modal-open');
+  };
+  formOpeners.forEach((el) => el.addEventListener('click', openForm));
+  formClosers.forEach((el) => el.addEventListener('click', closeForm));
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && contactModal && !contactModal.hasAttribute('hidden')) closeForm();
+  });
+
+  // submit via Web3Forms (no backend; access key is public by design)
+  const contactForm = document.getElementById('contact-form') as HTMLFormElement | null;
+  const formStatus = document.getElementById('form-status');
+
+  // live character counter on the message (maxlength enforces the hard cap)
+  const msgField = contactForm?.querySelector('textarea[name="message"]') as HTMLTextAreaElement | null;
+  const msgCount = document.getElementById('msg-count');
+  if (msgField && msgCount) {
+    const max = msgField.maxLength;
+    const update = () => { msgCount.textContent = `${msgField.value.length} / ${max}`; };
+    msgField.addEventListener('input', update);
+    update();
+  }
+
+  if (contactForm) {
+    // clear a validation error as soon as the visitor starts fixing any field
+    contactForm.addEventListener('input', () => {
+      if (formStatus && formStatus.classList.contains('is-error')) {
+        formStatus.className = 'form-status';
+        formStatus.textContent = '';
+      }
+    });
+
+    contactForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const submitBtn = contactForm.querySelector('button[type="submit"]') as HTMLButtonElement | null;
+
+      // require all three fields, and a properly-formed email (name@domain.tld), before sending
+      const nameField = contactForm.querySelector('[name="name"]') as HTMLInputElement | null;
+      const emailField = contactForm.querySelector('[name="email"]') as HTMLInputElement | null;
+      const messageField = contactForm.querySelector('[name="message"]') as HTMLTextAreaElement | null;
+      const fail = (msg: string, field: HTMLElement | null | undefined) => {
+        if (formStatus) { formStatus.className = 'form-status is-error'; formStatus.textContent = msg; }
+        field?.focus();
+      };
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+      if (!nameField?.value.trim()) return fail('Please enter your name.', nameField);
+      if (!emailField?.value.trim()) return fail('Please enter your email.', emailField);
+      if (!emailPattern.test(emailField.value.trim())) return fail('Please enter a valid email address.', emailField);
+      if (!messageField?.value.trim()) return fail('Please enter a message.', messageField);
+
+      if (formStatus) { formStatus.className = 'form-status'; formStatus.textContent = 'Sending…'; }
+      if (submitBtn) submitBtn.disabled = true;
+      try {
+        const payload = Object.fromEntries(new FormData(contactForm).entries());
+        const res = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        const data = await res.json();
+        if (data.success) {
+          if (formStatus) { formStatus.className = 'form-status is-success'; formStatus.textContent = 'Thanks. Your message is on its way.'; }
+          contactForm.reset();
+        } else {
+          throw new Error(data.message || 'failed');
+        }
+      } catch {
+        if (formStatus) { formStatus.className = 'form-status is-error'; formStatus.textContent = 'Could not send. Please email me directly instead.'; }
+      } finally {
+        if (submitBtn) submitBtn.disabled = false;
+      }
+    });
+  }
 
   // showcase show-more/less toggle: expands hidden extra card on mobile
   document.querySelectorAll<HTMLButtonElement>('.showcase-toggle').forEach((btn) => {
