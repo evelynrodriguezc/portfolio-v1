@@ -62,6 +62,17 @@ const {
         emailFixed.href = `mailto:${user}@${domain}`;
       }
 
+      // mobile bust-peek avatar: slides away once the visitor starts scrolling
+      // (class has styles only under 680px, so this is inert on desktop)
+      const heroAvatar = document.querySelector<HTMLElement>('.hero-avatar');
+      if (heroAvatar) {
+        const onScroll = () => {
+          heroAvatar.classList.toggle('avatar-away', window.scrollY > 30);
+        };
+        window.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
+      }
+
       // scroll reveal: IntersectionObserver toggles .is-visible once, then unobserves.
       // reduced-motion users skip the anim: mark everything visible immediately.
       const revealTargets = document.querySelectorAll<HTMLElement>('.scroll-reveal');

@@ -406,6 +406,30 @@ section {
   display: none;
 }
 
+/* terminal cursor after the last headline word: underscore style, step-blink (not fade)
+   like a real prompt */
+.h1-full::after,
+.h1-short::after {
+  content: '';
+  display: inline-block;
+  width: 0.6ch;
+  height: 0.1em; /* thin bar on the baseline reads as the underscore cursor */
+  margin-left: 0.14em;
+  background: var(--accent);
+  animation: cursor-blink 1.2s steps(1) infinite;
+}
+
+@keyframes cursor-blink {
+  50% { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .h1-full::after,
+  .h1-short::after {
+    animation: none; /* steady cursor, no blink */
+  }
+}
+
 .accent-word {
   color: var(--accent);
 }
@@ -555,17 +579,52 @@ section {
   }
 }
 
-/* typographic hero stands alone on phones */
+/* mobile: bust-up peek rising from the bottom edge of the viewport. It paints
+   behind the page content (negative z-index inside main's stacking context), so
+   it structurally cannot cover CTAs or stats; the hero also reserves bottom
+   padding so text and bust don't visually collide at rest */
 @media (max-width: 680px) {
   .hero-avatar {
+    position: fixed;
+    left: 50%;
+    bottom: 0;
+    z-index: -1;
+    width: min(230px, 58vw);
+    /* second translate term drops the figure so only head-to-bust (top ~45%) peeks above the fold */
+    transform: translate(-50%, 55%);
+    pointer-events: none;
+    transition: transform 0.55s ease, opacity 0.55s ease;
+  }
+
+  .hero-avatar img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  /* feet are below the fold in the peek, and so is their shadow */
+  .hero-avatar::after {
     display: none;
+  }
+
+  /* toggled by the scroll listener in MainLayout: slides down out of view */
+  .hero-avatar.avatar-away {
+    transform: translate(-50%, 120%);
+    opacity: 0;
   }
 }
 
-/* dark is the default theme (no data-theme attribute); accent glow only in dark */
+@media (max-width: 680px) and (prefers-reduced-motion: reduce) {
+  .hero-avatar {
+    transition: none; /* appears/disappears instantly instead of sliding */
+  }
+}
+
+/* dark mode gets no filter: a black drop-shadow is invisible on #121213, and the
+   soft accent glow tried here banded into visible rings around her silhouette
+   (too few color steps between the glow and the near-black background) */
 .hero-avatar img {
-  filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.5))
-          drop-shadow(0 0 32px rgba(122, 147, 229, 0.12));
+  filter: none;
 }
 
 :root[data-theme="light"] .hero-avatar img {
@@ -604,7 +663,10 @@ section {
   filter: blur(4px);
 }
 
-@media (prefers-reduced-motion: no-preference) {
+/* desktop-only: the entrance fade's fill-mode would pin opacity at 1 and defeat the
+   mobile peek's scroll-away fade (animations outrank class declarations), and the
+   float would fight the peek's static transform — so all three stay ≥681px */
+@media (prefers-reduced-motion: no-preference) and (min-width: 681px) {
   /* fade lives on the wrapper, float on the img: two transforms can't share one element */
   .hero-avatar {
     opacity: 0;
@@ -1411,7 +1473,7 @@ body.modal-open #email-fixed {
   /* Hero */
   #hero {
     padding-top: 72px;
-    padding-bottom: 56px;
+    padding-bottom: 200px; /* clears the bust-peek avatar zone (~180px) at the viewport bottom */
     margin-bottom: 56px;
   }
 
@@ -1446,6 +1508,12 @@ body.modal-open #email-fixed {
 
   .proof-num {
     font-size: var(--step-1);
+  }
+
+  /* stack the label words ("production" / "websites") instead of one long line */
+  .proof-label {
+    white-space: normal;
+    max-width: min-content;
   }
 
   #contact {
