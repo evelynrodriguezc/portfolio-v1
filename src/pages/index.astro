@@ -282,16 +282,16 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || "1x0000000
           <span class="form-label">Message <span class="form-count" id="msg-count">0 / 1000</span></span>
           <textarea name="message" rows="5" required maxlength="1000"></textarea>
         </label>
-        <!-- Cloudflare Turnstile: renders an (invisible) challenge and injects a
-             cf-turnstile-response token the server verifies before sending -->
-        <div class="cf-turnstile" data-sitekey={turnstileSiteKey} data-theme="dark"></div>
+        <!-- Cloudflare Turnstile: rendered explicitly in JS so its theme tracks the
+             site's light/dark toggle; injects a cf-turnstile-response token to verify -->
+        <div id="turnstile-widget" data-sitekey={turnstileSiteKey}></div>
         <button type="submit" class="hero-cta-primary form-submit">Send <span class="arrow">→</span></button>
         <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
       </form>
     </div>
   </div>
 
-  <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+  <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onloadTurnstileCallback&render=explicit" async defer></script>
 </MainLayout>
 
 <script>
@@ -413,6 +413,20 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || "1x0000000
     update();
   }
 
+  // Turnstile: render explicitly so its theme matches the site, and re-render on toggle
+  let turnstileWidgetId: string | null = null;
+  const turnstileTheme = () => (document.documentElement.dataset.theme === 'light' ? 'light' : 'dark');
+  const renderTurnstile = () => {
+    const el = document.getElementById('turnstile-widget');
+    const ts = (window as any).turnstile;
+    if (!el || !ts) return;
+    if (turnstileWidgetId !== null) { try { ts.remove(turnstileWidgetId); } catch {} }
+    turnstileWidgetId = ts.render(el, { sitekey: el.getAttribute('data-sitekey'), theme: turnstileTheme() });
+  };
+  (window as any).onloadTurnstileCallback = renderTurnstile;
+  if ((window as any).turnstile) renderTurnstile();          // in case the script loaded first
+  new MutationObserver(renderTurnstile).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
   if (contactForm) {
     // clear a validation error as soon as the visitor starts fixing any field
     contactForm.addEventListener('input', () => {
@@ -444,6 +458,8 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || "1x0000000
       if (submitBtn) submitBtn.disabled = true;
       try {
         const fd = new FormData(contactForm);
+        const ts = (window as any).turnstile;
+        const turnstileToken = (turnstileWidgetId !== null && ts?.getResponse(turnstileWidgetId)) || fd.get('cf-turnstile-response') || '';
         const res = await fetch('/api/contact', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
@@ -451,7 +467,7 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || "1x0000000
             name: fd.get('name'),
             email: fd.get('email'),
             message: fd.get('message'),
-            turnstileToken: fd.get('cf-turnstile-response') || '',
+            turnstileToken,
           }),
         });
         const data = await res.json().catch(() => ({}));
@@ -467,7 +483,7 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || "1x0000000
       } finally {
         if (submitBtn) submitBtn.disabled = false;
         // reset Turnstile so a fresh token is issued for the next submit
-        if ((window as any).turnstile) (window as any).turnstile.reset();
+        if (ts && turnstileWidgetId !== null) ts.reset(turnstileWidgetId);
       }
     });
   }
