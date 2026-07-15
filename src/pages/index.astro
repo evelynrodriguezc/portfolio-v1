@@ -1,5 +1,9 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro";
+
+// Cloudflare Turnstile site key (public). Falls back to Cloudflare's always-pass
+// test key so the form works in local dev before the real key is set in Vercel.
+const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || "1x00000000000000000000AA";
 ---
 
 <MainLayout title="Evelyn R. — Developer">
@@ -266,10 +270,6 @@ import MainLayout from "../layouts/MainLayout.astro";
         </div>
       </div>
       <form id="contact-form" class="contact-form" novalidate>
-        <!-- Replace with your free Web3Forms access key from https://web3forms.com (public by design) -->
-        <input type="hidden" name="access_key" value="YOUR_WEB3FORMS_ACCESS_KEY" />
-        <input type="hidden" name="subject" value="New message from evelynr.dev" />
-        <input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" style="display:none" aria-hidden="true" />
         <label class="form-field">
           <span class="form-label">Name</span>
           <input type="text" name="name" required maxlength="80" autocomplete="name" />
@@ -282,11 +282,16 @@ import MainLayout from "../layouts/MainLayout.astro";
           <span class="form-label">Message <span class="form-count" id="msg-count">0 / 1000</span></span>
           <textarea name="message" rows="5" required maxlength="1000"></textarea>
         </label>
+        <!-- Cloudflare Turnstile: renders an (invisible) challenge and injects a
+             cf-turnstile-response token the server verifies before sending -->
+        <div class="cf-turnstile" data-sitekey={turnstileSiteKey} data-theme="dark"></div>
         <button type="submit" class="hero-cta-primary form-submit">Send <span class="arrow">→</span></button>
         <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
       </form>
     </div>
   </div>
+
+  <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </MainLayout>
 
 <script>
@@ -438,23 +443,31 @@ import MainLayout from "../layouts/MainLayout.astro";
       if (formStatus) { formStatus.className = 'form-status'; formStatus.textContent = 'Sending…'; }
       if (submitBtn) submitBtn.disabled = true;
       try {
-        const payload = Object.fromEntries(new FormData(contactForm).entries());
-        const res = await fetch('https://api.web3forms.com/submit', {
+        const fd = new FormData(contactForm);
+        const res = await fetch('/api/contact', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-          body: JSON.stringify(payload),
+          body: JSON.stringify({
+            name: fd.get('name'),
+            email: fd.get('email'),
+            message: fd.get('message'),
+            turnstileToken: fd.get('cf-turnstile-response') || '',
+          }),
         });
-        const data = await res.json();
-        if (data.success) {
+        const data = await res.json().catch(() => ({}));
+        if (res.ok && data.success) {
           if (formStatus) { formStatus.className = 'form-status is-success'; formStatus.textContent = 'Thanks. Your message is on its way.'; }
           contactForm.reset();
         } else {
-          throw new Error(data.message || 'failed');
+          throw new Error(data.error || 'failed');
         }
-      } catch {
-        if (formStatus) { formStatus.className = 'form-status is-error'; formStatus.textContent = 'Could not send. Please email me directly instead.'; }
+      } catch (err) {
+        const msg = err instanceof Error && err.message !== 'failed' ? err.message : 'Could not send. Please email me directly instead.';
+        if (formStatus) { formStatus.className = 'form-status is-error'; formStatus.textContent = msg; }
       } finally {
         if (submitBtn) submitBtn.disabled = false;
+        // reset Turnstile so a fresh token is issued for the next submit
+        if ((window as any).turnstile) (window as any).turnstile.reset();
       }
     });
   }

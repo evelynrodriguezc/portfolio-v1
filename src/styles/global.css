@@ -635,6 +635,7 @@ section {
    important is covered, and slides away on scroll */
 @media (max-width: 680px) {
   .hero-avatar {
+    display: none; /* TEMP: avatar hidden on mobile — remove this line to restore */
     position: fixed;
     left: 68%; /* sits right of center so she doesn't cover the text/interstitial */
     bottom: 7dvh; /* lifts her feet up to rest just above the hero divider line */
