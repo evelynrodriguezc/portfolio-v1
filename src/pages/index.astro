@@ -415,16 +415,22 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || "1x0000000
 
   // Turnstile: render explicitly so its theme matches the site, and re-render on toggle
   let turnstileWidgetId: string | null = null;
+  let renderedTheme: string | null = null;
   const turnstileTheme = () => (document.documentElement.dataset.theme === 'light' ? 'light' : 'dark');
   const renderTurnstile = () => {
     const el = document.getElementById('turnstile-widget');
     const ts = (window as any).turnstile;
     if (!el || !ts) return;
+    const theme = turnstileTheme();
+    // skip when already showing the right theme; a redundant render's async iframe lands
+    // after innerHTML='' and stacks a second (light) widget, leaving a white box
+    if (turnstileWidgetId !== null && theme === renderedTheme) return;
     // fully tear down the previous widget (remove() alone can leave its iframe behind,
     // stacking a light + dark widget when the theme toggles)
     if (turnstileWidgetId !== null) { try { ts.remove(turnstileWidgetId); } catch {} turnstileWidgetId = null; }
     el.innerHTML = '';
-    turnstileWidgetId = ts.render(el, { sitekey: el.getAttribute('data-sitekey'), theme: turnstileTheme() });
+    renderedTheme = theme;
+    turnstileWidgetId = ts.render(el, { sitekey: el.getAttribute('data-sitekey'), theme });
   };
   (window as any).onloadTurnstileCallback = renderTurnstile;
   if ((window as any).turnstile) renderTurnstile();          // in case the script loaded first
