@@ -1414,6 +1414,14 @@ button.hero-cta-primary {
   min-height: 110px;
 }
 
+/* Turnstile renders a fixed ~300px iframe; keep the wrapper at that natural
+   width so the flex column doesn't stretch it and leave blank space alongside */
+#turnstile-widget {
+  align-self: flex-start;
+  width: 300px;
+  max-width: 100%;
+}
+
 .form-submit {
   align-self: flex-start;
   margin-top: 4px;
