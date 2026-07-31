@@ -465,9 +465,10 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || "1x0000000
 
       if (formStatus) { formStatus.className = 'form-status'; formStatus.textContent = 'Sending…'; }
       if (submitBtn) submitBtn.disabled = true;
+      // declared outside the try so the finally block can still reach it
+      const ts = (window as any).turnstile;
       try {
         const fd = new FormData(contactForm);
-        const ts = (window as any).turnstile;
         const turnstileToken = (turnstileWidgetId !== null && ts?.getResponse(turnstileWidgetId)) || fd.get('cf-turnstile-response') || '';
         const res = await fetch('/api/contact', {
           method: 'POST',
