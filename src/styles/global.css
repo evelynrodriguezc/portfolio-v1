@@ -169,44 +169,6 @@ a:hover .arrow-out {
   border-color: var(--border-strong);
 }
 
-/* fixed email button: sits below theme toggle, mirrors its circular chrome */
-#email-fixed {
-  position: fixed;
-  top: 68px;
-  right: 20px;
-  z-index: 10;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  border: 1px solid var(--border);
-  background: var(--surface);
-  color: var(--text);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: border-color 0.15s ease, color 0.2s ease;
-}
-
-#email-fixed:hover {
-  border-color: var(--border-strong);
-  color: var(--accent);
-}
-
-#email-fixed svg {
-  display: block;
-}
-
-/* mobile: tighter gap under sun button; shift down slightly when modal is open */
-@media (max-width: 680px) {
-  #email-fixed {
-    top: 68px;
-  }
-
-  body.modal-open #email-fixed {
-    top: 90px;
-  }
-}
-
 /* dark theme shows sun (click = go light), light theme shows moon */
 #theme-toggle .icon-moon {
   display: none;
@@ -377,6 +339,38 @@ section {
   margin-bottom: clamp(2rem, 4.5vw, 3.5rem); /* fluid gap: grows with screen width but capped, no more giant void */
 }
 
+/* profile links sit beside the name, not in the right corner: the fixed theme and
+   email buttons already own that corner and a third cluster there reads as clutter */
+.hero-identity {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.hero-top-links {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.hero-top-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px; /* padded hit area around a 17px glyph: still tappable at this size */
+  color: var(--text-muted);
+  transition: color 0.2s ease;
+}
+
+.hero-top-icon:hover {
+  color: var(--accent);
+}
+
+.hero-top-icon svg {
+  display: block;
+}
+
 /* below ~1200px the fixed toggle button sits over the container edge, so give the top bar room */
 @media (max-width: 1200px) {
   .hero-top {
@@ -519,34 +513,48 @@ section {
   transform: translateY(-2px); /* slight lift = tactile press-me feel */
 }
 
-.hero-cta-secondary {
+/* outline twin of the primary pill: same geometry, no fill, so it reads as the
+   secondary action without a second block of accent color fighting the first */
+.hero-cta-ghost {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
-  font-size: var(--step-0);
-  font-weight: 500;
-  color: var(--text);
-  padding-bottom: 2px;
-  background-image:
-    linear-gradient(var(--accent), var(--accent)),
-    linear-gradient(var(--text-muted), var(--text-muted));
-  background-size: 0% 1px, 100% 1px;
-  background-position: left bottom, left bottom;
-  background-repeat: no-repeat;
-  transition: color 0.2s ease, background-size 0.35s ease;
+  gap: 10px;
+  padding: 14px 30px; /* 1px less than primary on each side: the 1px border makes up the difference */
+  border: 1px solid var(--accent);
+  border-radius: 999px;
+  background: none;
+  color: var(--accent);
+  font-family: inherit;
+  font-size: var(--step-1);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
 }
 
-.hero-cta-secondary:hover {
-  color: var(--accent);
-  background-size: 100% 1px, 100% 1px;
+/* fills in on hover to match the primary pill: restrained at rest, full reward on approach */
+.hero-cta-ghost:hover {
+  background: var(--accent);
+  color: var(--bg);
 }
 
-/* avatar waves toward the CTA, so hovering her lights up "Contact me" the same
-   way hovering the link itself does. :has() lets #hero react to a descendant's
-   hover, which a sibling combinator can't reach backward to the earlier CTA. */
-#hero:has(.hero-avatar:hover) .hero-cta-secondary {
-  color: var(--accent);
-  background-size: 100% 1px, 100% 1px;
+/* the hero already runs two perpetual loops (headline cursor, availability dot), so the
+   idle nudge is dropped here. hover still fires it via [data-form-open]:hover .arrow.
+   The contact section keeps the loop: nothing competes with it down there. */
+.hero-cta-ghost .arrow {
+  animation: none;
+}
+
+.hero-availability-row {
+  margin-top: 1.1rem;
+}
+
+/* avatar waves toward the CTA, so hovering her lights up "Get in touch" the same
+   way hovering it directly does. :has() lets #hero react to a descendant's hover,
+   which a sibling combinator can't reach backward to the earlier button. */
+#hero:has(.hero-avatar:hover) .hero-cta-ghost {
+  background: var(--accent);
+  color: var(--bg);
 }
 
 .hero-proof {
@@ -605,13 +613,14 @@ section {
   #hero h1,
   .hero-sub,
   .hero-actions,
+  .hero-availability-row,
   .hero-proof {
     grid-column: 1; /* pin text flow to the left column so auto-placement can't drift */
   }
 
   .hero-avatar {
     grid-column: 2;
-    grid-row: 2 / 6; /* spans h1, sub, actions, proof rows */
+    grid-row: 2 / 7; /* spans h1, sub, actions, links, proof rows */
     align-self: start; /* top edge lines up with the top of the headline */
     justify-self: center;
     position: relative; /* anchors the contact-shadow pseudo-element */
@@ -1200,13 +1209,9 @@ section {
 /* CV modal: fixed full-screen dim + centered PDF panel */
 .cv-modal[hidden] { display: none; }
 
-/* hide theme toggle while modal open — X sits where it was. keep email visible on top */
+/* hide theme toggle while modal open — the modal's X sits where it was */
 body.modal-open #theme-toggle {
   display: none;
-}
-
-body.modal-open #email-fixed {
-  z-index: 110;
 }
 
 .cv-modal {
@@ -1686,6 +1691,11 @@ button.hero-cta-primary {
     font-size: var(--step-0);
   }
 
+  .hero-cta-ghost {
+    padding: 13px 28px;
+    font-size: var(--step-0);
+  }
+
   /* desktop 3rem gap reads as a hole on a narrow screen */
   .hero-proof {
     margin-top: 40px;
@@ -1764,6 +1774,17 @@ button.hero-cta-primary {
     justify-content: center;
     align-self: center;
     padding: 14px 28px;
+  }
+
+  .hero-cta-ghost {
+    justify-content: center;
+    align-self: center;
+    padding: 13px 26px;
+  }
+
+  .hero-availability-row {
+    display: flex;
+    justify-content: center;
   }
 
   .hero-availability {
