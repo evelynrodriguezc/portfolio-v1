@@ -237,7 +237,7 @@ section {
 }
 
 #hero,
-#projects {
+#work {
   border-top: none;
 }
 
@@ -280,12 +280,12 @@ section {
   padding-top: var(--space-l);
 }
 
-#projects {
+#work {
   padding-top: 0;
 }
 
 /* interstitial already draws the divider line, so the section below drops its own */
-#work {
+#projects {
   border-top: none;
   padding-top: 0;
 }
@@ -794,8 +794,8 @@ section {
   max-width: none;
 }
 
-/* ---- Selected Work ---- */
-#work {
+/* ---- Side projects (last before About) ---- */
+#projects {
   margin-bottom: 0;
   padding-bottom: var(--space-section);
 }

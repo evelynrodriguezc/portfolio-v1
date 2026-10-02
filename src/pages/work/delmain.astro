@@ -4,7 +4,7 @@ import MainLayout from "../../layouts/MainLayout.astro";
 
 <MainLayout
   title="Delmain case study — Evelyn R."
-  description="How I kept 70+ production WordPress sites correct and stable at Delmain, and automated the repetitive publishing and QA work."
+  description="How I maintained 70+ production WordPress sites at Delmain, fixed form delivery issues, and built small tools that replaced manual work."
 >
 
   <article class="case-study">
@@ -26,26 +26,26 @@ import MainLayout from "../../layouts/MainLayout.astro";
       <h2 class="scroll-reveal">My role</h2>
       <p class="scroll-reveal">
         I maintained and extended more than 70 production WordPress websites built with Divi, Elementor, WPBakery, Avada, Gutenberg, and custom HTML, CSS, and JavaScript.
-        My work included responsive fixes, UI improvements, landing pages, plugin updates, form integrations, and ongoing maintenance across multiple client websites.
+        My work included responsive fixes, UI improvements, landing pages in Unbounce, plugin updates, form integrations, and ongoing maintenance across multiple client websites.
       </p>
 
-      <h2 class="scroll-reveal">Challenge</h2>
+      <h2 class="scroll-reveal">Forms that stopped sending</h2>
       <p class="scroll-reveal">
-        Publishing changes across dozens of websites was a repetitive manual process. Every deployment required QA, communication with account managers, and careful verification. Forms were especially critical because SMTP issues could prevent patient inquiries from reaching clients without any visible error.
+        Sometimes a contact form on a client site stopped delivering emails, with no visible error. When the team or the client noticed, I found the cause and set up SMTP on that site, so patient inquiries reached the practice again.
       </p>
 
-      <h2 class="scroll-reveal">Outcome</h2>
+      <h2 class="scroll-reveal">Automating insurance updates</h2>
       <p class="scroll-reveal">
-        I automated repetitive publishing steps and QA tasks while standardizing SMTP integrations across client websites. The workflow became more consistent, form delivery was verified instead of assumed, and repetitive manual checks were significantly reduced.
+        One client, a dental group with more than 15 offices, showed which insurance plans each office accepts. That data lived in a custom WordPress plugin: about 200 plans across 15+ offices, thousands of combinations. Every time something changed, the plugin made us enter everything again from zero, by hand.
+      </p>
+      <p class="scroll-reveal">
+        The data was already in a Google Sheet, so I wrote a Python script with Selenium that read the sheet and filled the plugin's forms, office by office. Doing it by hand took more than two hours of someone's full attention, with a high risk of mistakes. The script ran on its own in about an hour and a half, in the background, so the team could work on other things.
       </p>
 
-      <h2 class="scroll-reveal">Impact</h2>
-      <ul class="scroll-reveal">
-        <li>Reduced repetitive QA and publishing work across production websites.</li>
-        <li>Helped identify form delivery issues before they affected clients.</li>
-        <li>Improved consistency across deployments and maintenance tasks.</li>
-        <li>Allowed more time to be spent on development instead of repetitive operational work.</li>
-      </ul>
+      <h2 class="scroll-reveal">A PTO tool for HR</h2>
+      <p class="scroll-reveal">
+        HR tracked paid time off for around 40 employees by going through each person's calendar and counting the days in Excel. I built a Google Apps Script tool in about three days, with feedback from my manager. When HR ran it, it read the PTO events from each Google Calendar, added them to a Google Sheet, and calculated the days used and left for each person.
+      </p>
     </div>
 
     <a href="/#contact" class="case-cta scroll-reveal">Work with me →</a>

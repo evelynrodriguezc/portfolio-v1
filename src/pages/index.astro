@@ -33,7 +33,7 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || "1x0000000
       <span class="reveal-item" style="--reveal-delay: 0.12s"><span class="sub-full">Frontend, WordPress and automation, plus experience training and evaluating AI coding models.</span><span class="sub-short">Frontend, automation<br />and AI.</span></span>
     </p>
     <div class="hero-actions reveal">
-      <a href="#projects" class="hero-cta-primary reveal-item" style="--reveal-delay: 0.2s">Explore selected work <span class="arrow arrow-down">↓</span></a>
+      <a href="#work" class="hero-cta-primary reveal-item" style="--reveal-delay: 0.2s">Explore selected work <span class="arrow arrow-down">↓</span></a>
       <button type="button" class="hero-cta-ghost reveal-item" style="--reveal-delay: 0.26s" data-form-open>Get in touch <span class="arrow">→</span></button>
     </div>
     <div class="hero-availability-row reveal">
@@ -66,11 +66,74 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || "1x0000000
     <p class="scroll-reveal"><span class="hide-mobile">Not every project starts from scratch. Most require understanding, improving, and maintaining <span class="accent-word">existing systems</span>.</span><span class="show-mobile">Real projects evolve. That's where I enjoy <span class="accent-word">building</span>.</span></p>
   </div>
 
+  <!-- Selected Work -->
+  <section id="work">
+    <div class="section-side">
+      <span class="section-num">01</span>
+      <span class="section-name">client work</span>
+    </div>
+    <div class="section-content">
+
+    <div class="showcase">
+
+      <article class="showcase-card scroll-reveal">
+        <a href="/work/delmain" class="showcase-media">
+          <img src="/delmain1.png" alt="Jackson Family Dental website" loading="lazy" />
+        </a>
+        <div class="showcase-info">
+          <div class="showcase-text">
+            <p class="showcase-agency">Delmain</p>
+            <h3>Jackson Family Dental</h3>
+            <p>Maintenance and responsive improvements for a production business site, one of 70+ I supported, plus small internal tools.</p>
+          </div>
+          <div class="showcase-meta">
+            <div class="showcase-tags">
+              <span>WordPress</span><span>PHP</span><span>CSS</span><span>JavaScript</span>
+            </div>
+            <a href="/work/delmain" class="showcase-link">Case study →</a>
+            <a href="https://jacksonfamilydentalonline.com/" target="_blank" rel="noopener" class="showcase-link showcase-link--dim">Live site ↗</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="showcase-card scroll-reveal showcase-extra" style="--reveal-delay: 0.1s">
+        <a href="/work/simply-heating" class="showcase-media">
+          <img src="/pekan1.png" alt="Simply Heating website" loading="lazy" />
+        </a>
+        <div class="showcase-info">
+          <div class="showcase-text">
+            <p class="showcase-agency">Pekan Designs</p>
+            <h3>Simply Heating</h3>
+            <p>Responsive build from a Figma design, plus ongoing maintenance.</p>
+          </div>
+          <div class="showcase-meta">
+            <div class="showcase-tags">
+              <span>HTML</span><span>CSS</span><span>JavaScript</span>
+            </div>
+            <a href="/work/simply-heating" class="showcase-link">Case study →</a>
+            <a href="https://simplyheating.ca" target="_blank" rel="noopener" class="showcase-link showcase-link--dim">Live site ↗</a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+    <button type="button" class="showcase-toggle" aria-expanded="false">
+      <span class="showcase-toggle-label">Show more</span>
+      <span class="arrow arrow-down">↓</span>
+    </button>
+    </div>
+  </section>
+
+  <!-- Interstitial: client work → side projects -->
+  <div class="interstitial interstitial--left">
+    <p class="scroll-reveal"><span class="hide-mobile">Client work shows what <span class="accent-word">ships</span>. Side projects are where I try new things.</span><span class="show-mobile">Side projects are where I <span class="accent-word">experiment</span>.</span></p>
+  </div>
+
   <!-- Projects -->
   <section id="projects">
     <div class="section-side">
-      <span class="section-num">01</span>
-      <span class="section-name">featured</span>
+      <span class="section-num">02</span>
+      <span class="section-name">side projects</span>
     </div>
     <div class="section-content">
 
@@ -127,69 +190,6 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || "1x0000000
               <span>Bootstrap</span><span>HTML</span><span>CSS</span>
             </div>
             <a href="https://equestria.evelynr.dev" target="_blank" rel="noopener" class="showcase-link">View live ↗</a>
-          </div>
-        </div>
-      </article>
-
-    </div>
-    <button type="button" class="showcase-toggle" aria-expanded="false">
-      <span class="showcase-toggle-label">Show more</span>
-      <span class="arrow arrow-down">↓</span>
-    </button>
-    </div>
-  </section>
-
-  <!-- Interstitial: featured → client work -->
-  <div class="interstitial interstitial--left">
-    <p class="scroll-reveal"><span class="hide-mobile">Side projects show range. Client work shows what <span class="accent-word">ships</span>.</span><span class="show-mobile">Side projects inspire. Client work <span class="accent-word">ships</span>.</span></p>
-  </div>
-
-  <!-- Selected Work -->
-  <section id="work">
-    <div class="section-side">
-      <span class="section-num">02</span>
-      <span class="section-name">client work</span>
-    </div>
-    <div class="section-content">
-
-    <div class="showcase">
-
-      <article class="showcase-card scroll-reveal">
-        <a href="/work/delmain" class="showcase-media">
-          <img src="/delmain1.png" alt="Jackson Family Dental website" loading="lazy" />
-        </a>
-        <div class="showcase-info">
-          <div class="showcase-text">
-            <p class="showcase-agency">Delmain</p>
-            <h3>Jackson Family Dental</h3>
-            <p>Frontend implementation and responsive improvements for a production business website.</p>
-          </div>
-          <div class="showcase-meta">
-            <div class="showcase-tags">
-              <span>WordPress</span><span>PHP</span><span>CSS</span><span>JavaScript</span>
-            </div>
-            <a href="https://jacksonfamilydentalonline.com/" target="_blank" rel="noopener" class="showcase-link">Live site ↗</a>
-            <a href="/work/delmain" class="showcase-link showcase-link--dim">Case study →</a>
-          </div>
-        </div>
-      </article>
-
-      <article class="showcase-card scroll-reveal showcase-extra" style="--reveal-delay: 0.1s">
-        <a href="/work/simply-heating" class="showcase-media">
-          <img src="/pekan1.png" alt="Simply Heating website" loading="lazy" />
-        </a>
-        <div class="showcase-info">
-          <div class="showcase-text">
-            <p class="showcase-agency">Pekan Designs</p>
-            <h3>Simply Heating</h3>
-            <p>Built from scratch from a Figma design: responsive implementation and ongoing maintenance.</p>
-          </div>
-          <div class="showcase-meta">
-            <div class="showcase-tags">
-              <span>HTML</span><span>CSS</span><span>JavaScript</span>
-            </div>
-            <a href="https://simplyheating.ca" target="_blank" rel="noopener" class="showcase-link">Live site ↗</a>
-            <a href="/work/simply-heating" class="showcase-link showcase-link--dim">Case study →</a>
           </div>
         </div>
       </article>
