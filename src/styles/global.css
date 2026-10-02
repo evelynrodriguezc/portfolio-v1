@@ -809,19 +809,47 @@ section {
 }
 
 .case-back {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   font-family: 'Courier New', Courier, monospace;
   font-size: var(--step--1);
+  font-weight: 700;
   letter-spacing: 0.04em;
-  color: var(--text-muted);
+  color: var(--text);
   margin-bottom: 48px;
   border-bottom: 1px solid transparent;
   transition: color 0.15s ease, border-color 0.15s ease;
 }
 
 .case-back:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+/* fixed back button, mirrors #theme-toggle in the opposite corner */
+.case-back-float {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 10;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--surface);
   color: var(--text);
-  border-color: var(--border);
+  font-size: 1.1rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.case-back-float:hover {
+  color: var(--accent);
+  border-color: var(--accent);
 }
 
 .case-study h1 {
@@ -1466,7 +1494,8 @@ button.hero-cta-primary {
   content: "";
   position: absolute;
   left: 0;
-  top: 50%;
+  /* pinned to the first text line, so rows that wrap or stretch keep the square level with the text */
+  top: calc(14px + 0.8em);
   width: 6px;
   height: 6px;
   background: var(--accent);
@@ -1499,6 +1528,10 @@ button.hero-cta-primary {
   .about-facts li {
     font-size: var(--step--2);
     padding: 12px 0 12px 20px;
+  }
+
+  .about-facts li::before {
+    top: calc(12px + 0.8em);
   }
 
   .about-facts li:hover {
@@ -1862,5 +1895,71 @@ button.hero-cta-primary {
 
   .reveal-item {
     transform: none;
+  }
+}
+
+/* ---- More work (compact list under client work) ---- */
+.more-work {
+  margin-top: var(--space-xl);
+}
+
+.more-work-title {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: var(--step--2);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: var(--space-xs);
+}
+
+.more-work ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border-top: 1px solid var(--border);
+}
+
+.more-work li {
+  border-bottom: 1px solid var(--border);
+}
+
+.more-work a {
+  display: grid;
+  grid-template-columns: 11rem 1fr auto;
+  gap: var(--space-s);
+  align-items: baseline;
+  padding: var(--space-s) 0;
+  color: var(--text);
+}
+
+.more-work-name {
+  font-weight: 600;
+}
+
+.more-work-desc {
+  color: var(--text-muted);
+  font-size: var(--step--1);
+}
+
+.more-work-link {
+  font-size: var(--step--1);
+  font-weight: 600;
+  color: var(--accent);
+  transition: color 0.15s ease;
+}
+
+.more-work a:hover .more-work-link {
+  color: var(--brand-dark);
+}
+
+@media (max-width: 680px) {
+  .more-work a {
+    grid-template-columns: 1fr auto;
+    gap: 2px var(--space-s);
+  }
+
+  .more-work-desc {
+    grid-column: 1 / -1;
+    grid-row: 2;
   }
 }
