@@ -18,7 +18,10 @@ const canonical = new URL(Astro.url.pathname, "https://evelynr.dev").href;
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=4" />
+    <!-- ico fallback for browsers without SVG favicons; version bump forces a refetch -->
+    <link rel="icon" href="/favicon.ico?v=5" sizes="32x32" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=5" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=5" />
     <meta name="theme-color" content="#121110" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
