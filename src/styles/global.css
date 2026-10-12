@@ -1146,6 +1146,15 @@ section {
     display: block;
   }
 
+  /* list sits closer to the card above, a bit more air before side projects */
+  .more-work {
+    margin-top: var(--space-l);
+  }
+
+  #work {
+    margin-bottom: calc(var(--space-section) + var(--space-s));
+  }
+
   .showcase-card--wide .showcase-media,
   .showcase-media {
     aspect-ratio: 16 / 9;
