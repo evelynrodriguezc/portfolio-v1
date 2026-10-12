@@ -459,12 +459,18 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || "1x0000000
   const contactModal = document.getElementById('contact-modal');
   const formOpeners = document.querySelectorAll('[data-form-open]');
   const formClosers = document.querySelectorAll('[data-form-close]');
+  // pending auto-close after a successful send; cleared if the visitor closes first
+  let formCloseTimer: number | undefined;
   const openForm = () => {
     contactModal?.removeAttribute('hidden');
     document.body.style.overflow = 'hidden';
     document.body.classList.add('modal-open');
   };
   const closeForm = () => {
+    window.clearTimeout(formCloseTimer);
+    // drop the success note so the form opens clean next time
+    const status = document.getElementById('form-status');
+    if (status?.classList.contains('is-success')) { status.className = 'form-status'; status.textContent = ''; }
     contactModal?.setAttribute('hidden', '');
     document.body.style.overflow = '';
     document.body.classList.remove('modal-open');
@@ -475,7 +481,7 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || "1x0000000
     if (e.key === 'Escape' && contactModal && !contactModal.hasAttribute('hidden')) closeForm();
   });
 
-  // submit via Web3Forms (no backend; access key is public by design)
+  // submit to /api/contact (Turnstile-checked, sent through Resend)
   const contactForm = document.getElementById('contact-form') as HTMLFormElement | null;
   const formStatus = document.getElementById('form-status');
 
@@ -560,6 +566,9 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || "1x0000000
         if (res.ok && data.success) {
           if (formStatus) { formStatus.className = 'form-status is-success'; formStatus.textContent = 'Thanks. Your message is on its way.'; }
           contactForm.reset();
+          msgField?.dispatchEvent(new Event('input'));   // reset doesn't fire input; refresh the counter
+          // leave the confirmation up briefly, then close the pop-up on its own
+          formCloseTimer = window.setTimeout(closeForm, 2000);
         } else {
           throw new Error(data.error || 'failed');
         }
