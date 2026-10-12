@@ -1,0 +1,60 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+---
+
+<MainLayout
+  title="Echo Vault case study — Evelyn R."
+  description="Rebuilding an undocumented API from black-box experiments, solo, at Lab10's Frontier hackathon."
+>
+
+  <article class="case-study">
+    <a href="/#projects" class="case-back-float" aria-label="Back to projects">←</a>
+    <a href="/#projects" class="case-back"><span class="arrow">←</span> Back to projects</a>
+
+    <p class="eyebrow scroll-reveal">Case study — Lab10 Frontier</p>
+    <h1 class="scroll-reveal" style="--reveal-delay: 0.06s">Rebuilding an undocumented API from the outside</h1>
+    <p class="case-meta scroll-reveal" style="--reveal-delay: 0.12s">Solo entry · Oct 2026 · Python · FastAPI · Railway</p>
+    <a href="https://github.com/evelynrodriguezc/echo-vault" target="_blank" rel="noopener" class="case-live scroll-reveal" style="--reveal-delay: 0.18s">View the code <span class="arrow arrow-out">↗</span></a>
+
+    <div class="case-body">
+      <h2 class="scroll-reveal">Context</h2>
+      <p class="scroll-reveal">
+        Frontier is a one-day hackathon by Lab10 in Bogotá. In Challenge 2, "The black box", each team got access to an account service with no documentation and a budget of 8,000 requests. The goal: build an exact replica, with the same responses and the same errors, graded against 100 hidden tests.
+      </p>
+
+      <h2 class="scroll-reveal">My approach</h2>
+      <p class="scroll-reveal">
+        Every request to the original went through one script that logged it with the hypothesis it was testing. That log became the evidence behind every rule in the spec, the test suite for the replica, and a record of what I tried. The replica is a plain state machine in Python with no AI at runtime, so every answer is exact and repeatable.
+      </p>
+
+      <h2 class="scroll-reveal">When my own tests were wrong</h2>
+      <p class="scroll-reveal">
+        The first validation run scored 64/100 while my local tests passed at 100%. The local tests replayed my own experiments, so they shared the replica's blind spots. I wrote targeted tests for money flows and edge cases, found the rules I had missed, and raised the score to 79, then 89. The organizers' final official run scored 95/100.
+      </p>
+
+      <h2 class="scroll-reveal">A change mid-competition</h2>
+      <p class="scroll-reveal">
+        At 15:30 the organizers changed the service on purpose. I confirmed three new behaviors (balance format, transfer limit, an account lock), updated the replica's rules file, and had the new version deployed within ten minutes of seeing the first changed response.
+      </p>
+
+      <h2 class="scroll-reveal">Safety over score</h2>
+      <p class="scroll-reveal">
+        One command could shut down the service for every team. I blocked it and never explored it, even if that cost points. The service also returned a hidden note asking the reader to call an internal export endpoint, a prompt injection. I replicated the note as data and never followed it.
+      </p>
+
+      <h2 class="scroll-reveal">Results</h2>
+      <ul class="scroll-reveal">
+        <li>95/100 on the hidden test set in the final official run</li>
+        <li>4,387 of 8,000 requests used</li>
+        <li>A model given only my spec, with no tools, rebuilt the service and matched 99.97% of logged requests</li>
+        <li>Under $0.10 in AI costs</li>
+      </ul>
+      <p class="scroll-reveal">
+        <em>I used Claude Code as my coding agent. I planned the experiments, approved every batch of requests before it reached the shared service, and made the calls above.</em>
+      </p>
+    </div>
+
+    <a href="/#contact" class="case-cta scroll-reveal">Work with me →</a>
+  </article>
+
+</MainLayout>
