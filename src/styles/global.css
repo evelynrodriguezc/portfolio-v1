@@ -1923,7 +1923,8 @@ button.hero-cta-primary {
   border-bottom: 1px solid var(--border);
 }
 
-.more-work a {
+.more-work a,
+.more-work-row {
   display: grid;
   grid-template-columns: 11rem 1fr auto;
   gap: var(--space-s);
@@ -1953,7 +1954,8 @@ button.hero-cta-primary {
 }
 
 @media (max-width: 680px) {
-  .more-work a {
+  .more-work a,
+  .more-work-row {
     grid-template-columns: 1fr auto;
     gap: 2px var(--space-s);
   }
