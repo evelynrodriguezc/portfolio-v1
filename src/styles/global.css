@@ -1127,8 +1127,8 @@ section {
   border-color: var(--text-muted);
 }
 
-/* show-more toggle: hidden on desktop, revealed on mobile below */
-.showcase-toggle {
+/* list rows that stand in for the secondary cards on mobile */
+.more-work-mobile {
   display: none;
 }
 
@@ -1137,40 +1137,13 @@ section {
     grid-template-columns: 1fr;
   }
 
-  /* mobile: extra card hidden until toggle expands its grid */
+  /* mobile: secondary cards collapse into rows in the text list below */
   .showcase .showcase-extra {
     display: none;
   }
 
-  .showcase.is-expanded .showcase-extra {
-    display: flex;
-  }
-
-  .showcase-toggle {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    margin-top: 20px;
-    padding: 10px 22px;
-    border-radius: 999px;
-    background: transparent;
-    border: 1px solid var(--border);
-    color: var(--text);
-    font-size: var(--step-0);
-    font-weight: 500;
-    font-family: inherit;
-    cursor: pointer;
-    transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
-  }
-
-  .showcase-toggle:hover {
-    border-color: var(--border-strong);
-    color: var(--accent);
-  }
-
-  /* rotate arrow up when expanded — signals collapse action */
-  .showcase-toggle[aria-expanded="true"] .arrow-down {
-    transform: rotate(180deg);
+  .more-work-mobile {
+    display: block;
   }
 
   .showcase-card--wide .showcase-media,
@@ -1942,6 +1915,9 @@ button.hero-cta-primary {
   font-size: var(--step--1);
 }
 
+/* mobile swaps in the short description */
+.more-work-desc .desc-short { display: none; }
+
 .more-work-link {
   font-size: var(--step--1);
   font-weight: 600;
@@ -1964,4 +1940,7 @@ button.hero-cta-primary {
     grid-column: 1 / -1;
     grid-row: 2;
   }
+
+  .more-work-desc .desc-long { display: none; }
+  .more-work-desc .desc-short { display: inline; }
 }

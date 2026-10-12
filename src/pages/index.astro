@@ -117,24 +117,27 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || "1x0000000
       </article>
 
     </div>
-    <button type="button" class="showcase-toggle" aria-expanded="false">
-      <span class="showcase-toggle-label">Show more</span>
-      <span class="arrow arrow-down">↓</span>
-    </button>
     <div class="more-work scroll-reveal">
       <p class="more-work-title">More work</p>
       <ul>
+        <li class="more-work-mobile">
+          <a href="/work/simply-heating">
+            <span class="more-work-name">Simply Heating</span>
+            <span class="more-work-desc">Responsive build from a Figma design</span>
+            <span class="more-work-link">Read →</span>
+          </a>
+        </li>
         <li>
           <a href="/work/outlier">
             <span class="more-work-name">Outlier</span>
-            <span class="more-work-desc">Coding tasks, code reviews and rubrics to train AI models</span>
+            <span class="more-work-desc"><span class="desc-long">Coding tasks, code reviews and rubrics to train AI models</span><span class="desc-short">Tasks and rubrics to train AI models</span></span>
             <span class="more-work-link">Read →</span>
           </a>
         </li>
         <li>
           <a href="/work/to-rise">
             <span class="more-work-name">To Rise Supplies</span>
-            <span class="more-work-desc">A ChatGPT prompt template for around 40 new products a week</span>
+            <span class="more-work-desc"><span class="desc-long">A ChatGPT prompt template for around 40 new products a week</span><span class="desc-short">Prompt template for about 40 products a week</span></span>
             <span class="more-work-link">Read →</span>
           </a>
         </li>
@@ -216,25 +219,42 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || "1x0000000
       </article>
 
 
+
     </div>
-    <button type="button" class="showcase-toggle" aria-expanded="false">
-      <span class="showcase-toggle-label">Show more</span>
-      <span class="arrow arrow-down">↓</span>
-    </button>
     <div class="more-work scroll-reveal">
       <p class="more-work-title">More projects</p>
       <ul>
         <li>
           <div class="more-work-row">
+            <span class="more-work-name">Dextra</span>
+            <span class="more-work-desc"><span class="desc-long">Building an AI-assisted learning tool for surgical residents, with a physician co-author</span><span class="desc-short">AI learning tool for surgical residents</span></span>
+          </div>
+        </li>
+        <li>
+          <div class="more-work-row">
             <span class="more-work-name">Ops dashboard</span>
-            <span class="more-work-desc">Read-only dashboard for a private AI operations system: typed data contracts, automated data checks, and missing values never shown as $0</span>
+            <span class="more-work-desc"><span class="desc-long">Read-only dashboard for a private AI operations system: typed data contracts, automated data checks, and missing values never shown as $0</span><span class="desc-short">Dashboard for a private AI operations system</span></span>
           </div>
         </li>
         <li>
           <div class="more-work-row">
             <span class="more-work-name">DeskHunt</span>
-            <span class="more-work-desc">App for finding cafes and spaces to work on a laptop, rated on wifi, outlets, noise and hours</span>
+            <span class="more-work-desc"><span class="desc-long">App for finding cafes and spaces to work on a laptop, rated on wifi, outlets, noise and hours</span><span class="desc-short">App rating spots to work on a laptop</span></span>
           </div>
+        </li>
+        <li class="more-work-mobile">
+          <a href="https://smart-home-solutions.evelynr.dev" target="_blank" rel="noopener">
+            <span class="more-work-name">SmartHome</span>
+            <span class="more-work-desc">Product site for a home automation platform</span>
+            <span class="more-work-link">Live ↗</span>
+          </a>
+        </li>
+        <li class="more-work-mobile">
+          <a href="https://equestria.evelynr.dev" target="_blank" rel="noopener">
+            <span class="more-work-name">Equestrian Website</span>
+            <span class="more-work-desc">Site for an equestrian business</span>
+            <span class="more-work-link">Live ↗</span>
+          </a>
         </li>
       </ul>
     </div>
@@ -554,17 +574,6 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || "1x0000000
     });
   }
 
-  // showcase show-more/less toggle: expands hidden extra card on mobile
-  document.querySelectorAll<HTMLButtonElement>('.showcase-toggle').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const grid = btn.previousElementSibling as HTMLElement | null;
-      if (!grid) return;
-      const expanded = grid.classList.toggle('is-expanded');
-      btn.setAttribute('aria-expanded', String(expanded));
-      const label = btn.querySelector('.showcase-toggle-label');
-      if (label) label.textContent = expanded ? 'Show less' : 'Show more';
-    });
-  });
 
   if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     document.querySelectorAll('.proof-num').forEach((el) => {
